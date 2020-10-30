@@ -1,6 +1,6 @@
-# jarywebsite
+# jaryapp
 
-佳瑞网 - 基于 Flutter 构建的前端开发个人网站.
+A new Flutter project.
 
 ## Getting Started
 
