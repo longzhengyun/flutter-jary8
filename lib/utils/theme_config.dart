@@ -1,6 +1,6 @@
 class ThemeConfig {
   /// 通用色
-  static int colorTheme = 0xFF6175FF; /// 主色调: 蓝色
+  static int colorTheme = 0xFFCC0000; /// 主色调: 红色
 
   static int color000 = 0xFF000000;
   static int color333 = 0xFF333333;

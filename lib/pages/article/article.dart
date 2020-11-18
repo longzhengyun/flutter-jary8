@@ -12,7 +12,7 @@ class Article extends StatefulWidget {
 
 class _ArticleState extends State<Article> {
   /// 顶部bar数据
-  Map _barData = { 'title': '', 'hideBack': true, 'hideline': true };
+  Map _barData = { 'title': '前端文章', 'hideBack': true };
 
   @override
   void initState() {

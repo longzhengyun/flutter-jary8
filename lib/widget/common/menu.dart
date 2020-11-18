@@ -14,10 +14,8 @@ class Menu extends StatelessWidget {
     List<Widget> _option = [];
 
     for (var i = 0; i < data.length; i++) {
-      // String _icon = ThemeConfig.bottomBarIcon[i]['icon'];
       int _color = ThemeConfig.menuTextColor;
       if (i == index) {
-        // _icon = ThemeConfig.bottomBarIcon[i]['iconCurrent'];
         _color = ThemeConfig.menuTextCurrentColor;
       }
 
@@ -28,8 +26,8 @@ class Menu extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              // Image.asset(_icon, width: 22 * Global.pr, height: 22 * Global.pr,),
-              Text(data[i], style: TextStyle(
+              Icon(IconData(data[i]['icon'], fontFamily: 'icomoon'), color: Color(_color), size: 20 * Global.pr),
+              Text(data[i]['text'], style: TextStyle(
                 fontSize: 11 * Global.pr,
                 color: Color(_color),
               )),
