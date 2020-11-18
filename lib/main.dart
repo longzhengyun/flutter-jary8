@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluro/fluro.dart';
-import 'package:jaryapp/api/config.dart';
+import 'package:jaryapp/api/index.dart';
 import 'package:jaryapp/routes/application.dart';
 import 'package:jaryapp/routes/routes.dart';
 import 'package:jaryapp/utils/theme_config.dart';
@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
     Routes.configureRoutes(router);
     Application.router = router;
 
-    DBConfig.init();
+    ApiFetch.init();
   }
 
   @override

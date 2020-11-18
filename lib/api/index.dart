@@ -1,25 +1,57 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
+import 'package:flutter/services.dart';
+
+import 'package:jaryapp/api/query.dart';
 import 'package:jaryapp/api/config.dart';
 
-class AppConfig {
-  static const bool inProduction = const bool.fromEnvironment('dart.vm.product');
-}
+class ApiFetch {
+  static String _dbName = 'jary_data.db';
+  static String _defaultData = join('assets', 'data/$_dbName');
 
-class ApiConfig {
-  /// 获取用户信息
-  static const String USER_INFO = '/user/info';
-}
+  /// 初始化
+  static void init() async {
+    String _path = await getPath();
 
-class ApiQuery {
-  static Future dbQuery(String url, { Map data }) async {
-    if (url == ApiConfig.USER_INFO) {
-      return await DBConfig().userInfoQuery();
+    bool _exists = await databaseExists(_path);
+    if(!_exists) {
+      ByteData _data = await rootBundle.load(_defaultData);
+      List<int> _bytes = _data.buffer.asUint8List(_data.offsetInBytes, _data.lengthInBytes);
+
+      await new File(_path).writeAsBytes(_bytes);
     }
   }
 
+  /// 获取路径
+  static Future<String> getPath() async {
+    String _databasesPath = await getDatabasesPath();
+    return join(_databasesPath, _dbName);
+  }
+
+  /// 查询
+  static Future<List> dbFetch(String table, { List<String> columns }) async {
+    List _result = [];
+    String _path = await getPath();
+    Database _db = await openDatabase(_path);
+    List<Map> _data = await _db.query(table, columns: columns);
+    if (_data != null && _data.isNotEmpty) {
+      _data.forEach((element) {
+        String _item = json.encode(element);
+        _result.add(json.decode(_item));
+      });
+    }
+
+    await _db.close();
+    return _result;
+  }
+
   /// post请求
-  static Future query(String url, { Map params }) async {
+  static Future apiFetch(String url, { Map params }) async {
     try {
-      Map _response = await dbQuery(url, data: params);
+      Map _response = await ApiQuery.dbQuery(url, data: params);
       if(!AppConfig.inProduction){
         print('------------response-------------');
         print(url);

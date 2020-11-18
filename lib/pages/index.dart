@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jaryapp/api/index.dart';
+import 'package:jaryapp/api/config.dart';
+import 'package:jaryapp/manager/user.dart';
+import 'package:jaryapp/models/index.dart';
 import 'package:jaryapp/pages/article/article.dart';
 import 'package:jaryapp/pages/home/home.dart';
 import 'package:jaryapp/pages/mine/mine.dart';
@@ -15,6 +18,9 @@ class Index extends StatefulWidget {
 
 class _IndexState extends State<Index> {
   Future<void> _future;
+
+  /// app启动
+  bool _isFirst = true;
 
   /// 菜单
   List _menuData = [
@@ -39,7 +45,7 @@ class _IndexState extends State<Index> {
   void initState() {
     super.initState();
 
-    _future = _getUserInfo(); /// 启动App时，获取用户信息
+    _future = _checkLogin(); /// 启动App时，判断是否登录
   }
 
   @override
@@ -55,20 +61,25 @@ class _IndexState extends State<Index> {
     });
   }
 
-  /// 获取用户信息
-  Future<Map> _getUserInfo() async {
+  /// 获取登录信息
+  Future<Map> _checkLogin() async {
     Map _result;
 
     try {
-      _result = await ApiQuery.query(ApiConfig.USER_INFO);
+      _result = await ApiFetch.apiFetch(ApiConfig.USER_CHECK_LOGIN);
     } catch (e) {
     }
 
     return _result;
   }
 
-  void _saveUserInfo(snapshot) async {
-    bool _state = snapshot.hasData;
+  void _saveLoginState(snapshot) async {
+    if (_isFirst) {
+      UserManager _userManager = UserManager();
+      _userManager.user = snapshot.hasData ? User.fromJson(snapshot.data) : null;
+
+      _isFirst = false; /// 非app启动
+    }
   }
 
   @override
@@ -83,7 +94,7 @@ class _IndexState extends State<Index> {
               /// 请求失败，显示错误
               return Text('Error: ${snapshot.error}');
             } else {
-              _saveUserInfo(snapshot); /// 保存信息
+              _saveLoginState(snapshot); /// 保存登录信息
 
               /// 请求成功，显示页面
               return IndexedStack(
