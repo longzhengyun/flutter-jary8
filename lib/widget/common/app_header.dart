@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:jaryapp/utils/global.dart';
 import 'package:jaryapp/utils/theme_config.dart';
 
-class HeaderBar extends StatelessWidget implements PreferredSizeWidget {
-  HeaderBar(this.data, { Key key, this.action = const [], this.callback }) : super(key: key);
+class AppHeader extends StatelessWidget implements PreferredSizeWidget {
+  AppHeader({ Key key, this.title = '', this.hideBack = false, this.backTap = false, this.highlight = false, this.action = const [], this.callback }) : super(key: key);
 
-  final Map data;
+  final String title;
+  final bool hideBack;
+  final bool backTap;
+  final bool highlight;
   final List action;
   final Function callback;
 
@@ -30,7 +33,7 @@ class HeaderBar extends StatelessWidget implements PreferredSizeWidget {
           child: item['type'] == 0 ?
             Text(item['text'], style: TextStyle(
               fontSize: 16 * Global.pr,
-              color: Color(data['highlight'] ?? false ? ThemeConfig.headerHighlightColor : ThemeConfig.headerColor),
+              color: Color(highlight ? ThemeConfig.headerHighlightColor : ThemeConfig.headerTextColor),
             ))
             :
             Image.asset(item['icon'], width: 24 * Global.pr, height: 24 * Global.pr,)
@@ -39,20 +42,20 @@ class HeaderBar extends StatelessWidget implements PreferredSizeWidget {
     }
 
     return AppBar(
-      title: Text(data['title'] ?? '', style: TextStyle(
+      title: Text(title, style: TextStyle(
         fontSize: 18 * Global.pr,
-        color: Color(data['highlight'] ?? false ? ThemeConfig.headerHighlightColor : ThemeConfig.headerColor),
+        color: Color(highlight ? ThemeConfig.headerHighlightColor : ThemeConfig.headerTextColor),
         fontWeight: FontWeight.bold,
       )),
-      brightness: data['highlight'] ?? false ? Brightness.dark : Brightness.light,
+      brightness: highlight ? Brightness.dark : Brightness.light,
       centerTitle: true,
-      leading: data['hideBack'] ?? false ? null : IconButton(
-        icon: Icon(Icons.arrow_back_ios, color: Color(data['highlight'] ?? false ? ThemeConfig.headerHighlightColor : ThemeConfig.headerColor),),
-        onPressed: () => data['backTap'] ?? false ? callback('BackTap') : Navigator.pop(context),
+      leading: hideBack ? null : IconButton(
+        icon: Icon(Icons.arrow_back_ios, color: Color(highlight ? ThemeConfig.headerHighlightColor : ThemeConfig.headerTextColor),),
+        onPressed: () => backTap ? callback('BackTap') : Navigator.pop(context),
       ),
       actions: _option,
-      elevation: data['hideline'] ?? false ? 0 : 0.2,
-      backgroundColor: Color(data['highlight'] ?? false ? ThemeConfig.headerHighlightBgColor : ThemeConfig.headerBgColor),
+      elevation: highlight ? 0 : 0.2,
+      backgroundColor: Color(highlight ? ThemeConfig.headerHighlightBgColor : ThemeConfig.defaultBgColor),
     );
   }
 }

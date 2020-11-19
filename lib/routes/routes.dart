@@ -7,8 +7,17 @@ import 'package:jaryapp/routes/router_handler.dart';
 class Routes {
   static String root = '/';
 
+  static String search = '/search';
+
+  static String articleDetail = '/article-detail';
+
+  static String otherView = '/other-view';
+
   static void configureRoutes(Router router) {
     router.define(root, handler: indexHandler);
+    router.define(search, handler: searchHandler);
+    router.define(articleDetail, handler: articleDetailHandler);
+    router.define(otherView, handler: otherViewHandler);
   }
 
   /// 对参数进行encode，解决参数中有特殊字符，影响fluro路由匹配

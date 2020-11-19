@@ -22,18 +22,25 @@ class ThemeConfig {
   static int colorTRANS = 0x00000000; /// 全透明：黑
 
   /// 通用色
-  static int loadingColor = colorTheme;
-  static int defaultBgColor = colorEEE; /// 通用页面背景色
+  static int loadingColor = colorTheme; /// 通用loading色
+  static int defaultTextColor = color333; /// 通用页面文本色
+  static int defaultBgColor = colorFFF; /// 通用模块背景色
+  static int defaultPageBgColor = colorEEE; /// 通用页面背景色
+  static int defaultBorderColor = colorDDD; /// 通用边框色
 
   /// Header
-  static int headerBgColor = colorFFF; /// appBar背景颜色
-  static int headerHighlightBgColor = colorTheme; /// appBar背景高亮颜色
-  static int headerColor = color000; /// appBar默认颜色
-  static int headerHighlightColor = colorFFF; /// appBar高亮颜色
+  static int headerTextColor = color000;
+  static int headerHighlightColor = colorFFF;
+  static int headerHighlightBgColor = colorTheme;
 
   /// Menu
   static int menuBgColor = colorTRANS;
-  static int menuItemBgColor = colorFFF;
   static int menuTextColor = color999;
   static int menuTextCurrentColor = colorTheme;
+
+  /// Home
+  static String homeLoginIcon = 'assets/images/logo.png';
+  static int homeSearchTextColor = color999;
+  static int homeSearchBtnBgColor = colorEEE;
+  static int homeListBtnColor = color999;
 }

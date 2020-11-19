@@ -22,6 +22,14 @@ class ApiQuery {
     if (url == ApiConfig.USER_INFO) {
       return await DBQuery().userInfo();
     }
+
+    if (url == ApiConfig.ARTICLE_HOT) {
+      return await DBQuery().articleHot();
+    }
+
+    if (url == ApiConfig.SITE_HOT) {
+      return await DBQuery().siteHot();
+    }
   }
 }
 
@@ -64,6 +72,28 @@ class DBQuery {
       if (_data.isNotEmpty) {
         _result = _data.first;
       }
+    } catch (e) {
+    }
+
+    return _result;
+  }
+
+  Future<List> articleHot() async {
+    List _result = [];
+
+    try {
+      _result = await ApiFetch.dbFetch('article_data', columns: ['id', 'title'], where: 'hot="y"');
+    } catch (e) {
+    }
+
+    return _result;
+  }
+
+  Future<List> siteHot() async {
+    List _result = [];
+
+    try {
+      _result = await ApiFetch.dbFetch('site_data', columns: ['id', 'title', 'url'], where: 'hot="y"', limit: 6);
     } catch (e) {
     }
 

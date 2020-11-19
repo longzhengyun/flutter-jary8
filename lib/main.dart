@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> {
       dismissOtherOnShow: true, /// 全局设置隐藏之前的toast
       child: MaterialApp(
         initialRoute: '/', /// 配置默认访问路径
-        theme: ThemeData(scaffoldBackgroundColor: Color(ThemeConfig.defaultBgColor)),
+        theme: ThemeData(scaffoldBackgroundColor: Color(ThemeConfig.defaultPageBgColor)),
         onGenerateRoute: Application.router.generator,
         // debugShowMaterialGrid: true, // 显示网格
       ),

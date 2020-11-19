@@ -5,12 +5,16 @@ import 'package:flutter_easyrefresh/material_header.dart';
 import 'package:jaryapp/utils/theme_config.dart';
 import 'package:jaryapp/widget/common/app_header.dart';
 
-class Article extends StatefulWidget {
+class ArticleDetail extends StatefulWidget {
+  ArticleDetail(this.id, { Key key }) : super(key: key);
+
+  final String id;
+
   @override
-  _ArticleState createState() => _ArticleState();
+  _ArticleDetailState createState() => _ArticleDetailState();
 }
 
-class _ArticleState extends State<Article> {
+class _ArticleDetailState extends State<ArticleDetail> {
   @override
   void initState() {
     super.initState();
@@ -19,8 +23,7 @@ class _ArticleState extends State<Article> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: UniqueKey(),
-      appBar: AppHeader(title: '前端文章', hideBack: true),
+      appBar: AppHeader(title: '文章详情'),
       body: EasyRefresh.custom(
         slivers: <Widget>[],
         header: MaterialHeader(

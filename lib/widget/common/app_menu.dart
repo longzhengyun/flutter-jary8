@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:jaryapp/utils/global.dart';
 import 'package:jaryapp/utils/theme_config.dart';
 
-class Menu extends StatelessWidget {
-  Menu(this.data, this.index, this.callback, { Key key }) : super(key: key);
+class AppMenu extends StatelessWidget {
+  AppMenu(this.data, this.index, this.callback, { Key key }) : super(key: key);
 
   final List data;
   final int index;
@@ -43,7 +43,7 @@ class Menu extends StatelessWidget {
       child: Container(
         height: 49 * Global.pr,
         decoration: BoxDecoration(
-          color: Color(ThemeConfig.menuItemBgColor),
+          color: Color(ThemeConfig.defaultBgColor),
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(10 * Global.pr),
             topRight: Radius.circular(10 * Global.pr),

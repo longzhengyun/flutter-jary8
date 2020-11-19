@@ -7,9 +7,10 @@ import 'package:jaryapp/pages/article/article.dart';
 import 'package:jaryapp/pages/home/home.dart';
 import 'package:jaryapp/pages/mine/mine.dart';
 import 'package:jaryapp/pages/site/site.dart';
+import 'package:jaryapp/utils/event_bus.dart';
 import 'package:jaryapp/utils/global.dart';
 import 'package:jaryapp/utils/theme_config.dart';
-import 'package:jaryapp/widget/common/menu.dart';
+import 'package:jaryapp/widget/common/app_menu.dart';
 
 class Index extends StatefulWidget {
   @override
@@ -46,6 +47,11 @@ class _IndexState extends State<Index> {
     super.initState();
 
     _future = _checkLogin(); /// 启动App时，判断是否登录
+
+    /// 监听菜单切换通知
+    EventBus.instance.addListener(EventKeys.ChangeMenu, (index) {
+      _onMenuTap(index); /// 切换菜单
+    });
   }
 
   @override
@@ -55,7 +61,15 @@ class _IndexState extends State<Index> {
     Global().init(context); /// 导入全局变量
   }
 
-  void _onMenuTap(index) {
+  @override
+  void dispose() {
+    super.dispose();
+
+    EventBus.instance.removeListener(EventKeys.ChangeMenu); /// 移除菜地切换通知监听
+  }
+
+  /// 切换菜单
+  void _onMenuTap(int index) {
     setState(() {
       _currentIndex = index;
     });
@@ -73,7 +87,7 @@ class _IndexState extends State<Index> {
     return _result;
   }
 
-  void _saveLoginState(snapshot) async {
+  void _saveLoginState(dynamic snapshot) async {
     if (_isFirst) {
       UserManager _userManager = UserManager();
       _userManager.user = snapshot.hasData ? User.fromJson(snapshot.data) : null;
@@ -110,7 +124,7 @@ class _IndexState extends State<Index> {
           }
         }
       ),
-      bottomNavigationBar: Menu(_menuData, _currentIndex, _onMenuTap),
+      bottomNavigationBar: AppMenu(_menuData, _currentIndex, _onMenuTap),
     );
   }
 }

@@ -32,11 +32,11 @@ class ApiFetch {
   }
 
   /// 查询
-  static Future<List> dbFetch(String table, { List<String> columns }) async {
+  static Future<List> dbFetch(String table, { List<String> columns, String where, String orderBy = 'id desc', int limit = 10 }) async {
     List _result = [];
     String _path = await getPath();
     Database _db = await openDatabase(_path);
-    List<Map> _data = await _db.query(table, columns: columns);
+    List<Map> _data = await _db.query(table, columns: columns, where: where, orderBy: orderBy, limit: limit);
     if (_data != null && _data.isNotEmpty) {
       _data.forEach((element) {
         String _item = json.encode(element);
@@ -51,13 +51,15 @@ class ApiFetch {
   /// post请求
   static Future apiFetch(String url, { Map params }) async {
     try {
-      Map _response = await ApiQuery.dbQuery(url, data: params);
+      dynamic _response = await ApiQuery.dbQuery(url, data: params);
+
       if(!AppConfig.inProduction){
         print('------------response-------------');
         print(url);
         print(_response);
         print('-----------------------------');
       }
+
       if (_response != null) {
         return { 'code': 0, 'data': _response, 'message': 'success' };
       } else {

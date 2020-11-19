@@ -5,12 +5,12 @@ import 'package:flutter_easyrefresh/material_header.dart';
 import 'package:jaryapp/utils/theme_config.dart';
 import 'package:jaryapp/widget/common/app_header.dart';
 
-class Article extends StatefulWidget {
+class Search extends StatefulWidget {
   @override
-  _ArticleState createState() => _ArticleState();
+  _SearchState createState() => _SearchState();
 }
 
-class _ArticleState extends State<Article> {
+class _SearchState extends State<Search> {
   @override
   void initState() {
     super.initState();
@@ -19,8 +19,7 @@ class _ArticleState extends State<Article> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: UniqueKey(),
-      appBar: AppHeader(title: '前端文章', hideBack: true),
+      appBar: AppHeader(title: '搜索'),
       body: EasyRefresh.custom(
         slivers: <Widget>[],
         header: MaterialHeader(
