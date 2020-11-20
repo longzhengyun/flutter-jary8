@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:jaryapp/utils/global.dart';
 import 'package:jaryapp/utils/theme_config.dart';
 
-class HomeList extends StatelessWidget {
-  HomeList(this.title, this.list, this.callback, { Key key }) : super(key: key);
+class HotList extends StatelessWidget {
+  HotList(this.title, this.list, this.callback, { Key key, this.showMore = false }) : super(key: key);
 
   final String title;
   final List list;
   final Function callback;
+  final bool showMore;
 
   @override
   Widget build(BuildContext context) {
@@ -48,14 +49,14 @@ class HomeList extends StatelessWidget {
                   fontSize: 20 * Global.pr,
                   color: Color(ThemeConfig.defaultTextColor),
                 )),
-                GestureDetector(
+                showMore ? GestureDetector(
                   behavior: HitTestBehavior.opaque, /// 解决点击空白处无效问题
                   onTap: () => callback('More'),
                   child: Text('MORE', style: TextStyle(
                     fontSize: 16 * Global.pr,
                     color: Color(ThemeConfig.homeListBtnColor),
                   )),
-                ),
+                ) : Container(),
               ]
             )
           ),

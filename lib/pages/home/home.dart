@@ -8,7 +8,7 @@ import 'package:jaryapp/routes/routes.dart';
 import 'package:jaryapp/utils/event_bus.dart';
 import 'package:jaryapp/utils/theme_config.dart';
 import 'package:jaryapp/widget/common/app_header.dart';
-import 'package:jaryapp/widget/home/list.dart';
+import 'package:jaryapp/widget/common/hot_list.dart';
 import 'package:jaryapp/widget/home/logo.dart';
 import 'package:jaryapp/widget/home/search.dart';
 
@@ -26,11 +26,11 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
 
-    _getArticHot(); /// 获取首页推荐文章数据
-    _getSiteHot(); /// 获取首页推荐网站数据
+    _getArticHot(); /// 获取首页热门文章数据
+    _getSiteHot(); /// 获取首页热门网站数据
   }
 
-  /// 获取首页推荐文章数据
+  /// 获取首页热门文章数据
   void _getArticHot() async {
     try {
       Map _result;
@@ -44,7 +44,7 @@ class _HomeState extends State<Home> {
     }
   }
 
-  /// 获取首页推荐网站数据
+  /// 获取首页热门网站数据
   void _getSiteHot() async {
     try {
       Map _result;
@@ -93,8 +93,8 @@ class _HomeState extends State<Home> {
             delegate: SliverChildListDelegate(<Widget>[
               HomeLogo(),
               HomeSearch(_onSearchTap),
-              HomeList('推荐文章', _articleHot, _onArticleTap),
-              HomeList('推荐网站', _siteHot, _onSiteTap),
+              HotList('热门文章', _articleHot, _onArticleTap, showMore: true),
+              HotList('热门网站', _siteHot, _onSiteTap, showMore: true),
             ])
           ),
         ],
@@ -102,8 +102,8 @@ class _HomeState extends State<Home> {
           valueColor: AlwaysStoppedAnimation(Color(ThemeConfig.loadingColor)),
         ),
         onRefresh: () async {
-          _getArticHot(); /// 获取首页推荐文章数据
-          _getSiteHot(); /// 获取首页推荐网站数据
+          _getArticHot(); /// 获取首页热门文章数据
+          _getSiteHot(); /// 获取首页热门网站数据
         }
       )
     );

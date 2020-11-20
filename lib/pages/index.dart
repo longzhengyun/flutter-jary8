@@ -24,12 +24,7 @@ class _IndexState extends State<Index> {
   bool _isFirst = true;
 
   /// 菜单
-  List _menuData = [
-    { 'text': '首页', 'icon': 0xe900 },
-    { 'text': '文章', 'icon': 0xe920 },
-    { 'text': '网站', 'icon': 0xe92e },
-    { 'text': '我的', 'icon': 0xe976 },
-  ];
+  List _menuData = [Icons.home, Icons.library_books, Icons.web, Icons.person];
 
   /// 当前tab
   int _currentIndex = 0;

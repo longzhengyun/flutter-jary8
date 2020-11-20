@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 import 'package:jaryapp/pages/article/article_detail.dart';
 import 'package:jaryapp/pages/index.dart';
-import 'package:jaryapp/pages/other_view.dart';
+import 'package:jaryapp/pages/webview/other_view.dart';
 import 'package:jaryapp/pages/search/search.dart';
 
 /// 主页

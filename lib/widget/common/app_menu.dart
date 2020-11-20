@@ -26,11 +26,7 @@ class AppMenu extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Icon(IconData(data[i]['icon'], fontFamily: 'icomoon'), color: Color(_color), size: 20 * Global.pr),
-              Text(data[i]['text'], style: TextStyle(
-                fontSize: 11 * Global.pr,
-                color: Color(_color),
-              )),
+              Icon(data[i], color: Color(_color), size: 26 * Global.pr),
             ],
           ),
         )

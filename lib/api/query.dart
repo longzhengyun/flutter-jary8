@@ -27,6 +27,21 @@ class ApiQuery {
       return await DBQuery().articleHot();
     }
 
+    if (url == ApiConfig.ARTICLE_RECOMMEND) {
+      int _id = data['id'];
+      String _category = data['category'];
+      if (_id is int && _category.isNotEmpty) {
+        return await DBQuery().articleRecommend(_id, _category);
+      }
+    }
+
+    if (url == ApiConfig.ARTICLE_DETAIL) {
+      int _id = data['id'];
+      if (_id is int) {
+        return await DBQuery().articleDetail(_id);
+      }
+    }
+
     if (url == ApiConfig.SITE_HOT) {
       return await DBQuery().siteHot();
     }
@@ -37,8 +52,12 @@ class DBQuery {
   Future<Map> userCheckLogin() async {
     Map _result;
 
+    String _name = 'admin_data';
+    List<String> _columns = ['id', 'username', 'nickname'];
+
     try {
-      List _data = await ApiFetch.dbFetch('admin_data', columns: ['id', 'username', 'nickname']);
+      List _data = await ApiFetch.dbFetch(_name, columns: _columns);
+
       String _loginToken = await Prefs.getValue(Prefs.KEY_LOGIN_TOKEN);
       String _loginInfoString = await Prefs.getValue(Prefs.KEY_LOGIN_INFO);
 
@@ -66,8 +85,11 @@ class DBQuery {
   Future<Map> userInfo() async {
     Map _result;
 
+    String _name = 'user_data';
+    List<String> _columns = ['nickname', 'email', 'city', 'job', 'motto'];
+
     try {
-      List _data = await ApiFetch.dbFetch('user_data', columns: ['nickname', 'email', 'city', 'job', 'motto']);
+      List _data = await ApiFetch.dbFetch(_name, columns: _columns);
 
       if (_data.isNotEmpty) {
         _result = _data.first;
@@ -81,8 +103,48 @@ class DBQuery {
   Future<List> articleHot() async {
     List _result = [];
 
+    String _name = 'article_data';
+    List<String> _columns = ['id', 'title'];
+    String _where = 'hot="y"';
+
     try {
-      _result = await ApiFetch.dbFetch('article_data', columns: ['id', 'title'], where: 'hot="y"');
+      _result = await ApiFetch.dbFetch(_name, columns: _columns, where: _where);
+    } catch (e) {
+    }
+
+    return _result;
+  }
+
+  Future<List> articleRecommend(int id, String category) async {
+    List _result = [];
+
+    String _name = 'article_data';
+    List<String> _columns = ['id', 'title'];
+    String _where = 'category="$category" AND id!="$id"';
+    int _limit = 6;
+
+    try {
+      _result = await ApiFetch.dbFetch(_name, columns: _columns, where: _where, limit: _limit);
+    } catch (e) {
+      print(e);
+    }
+
+    return _result;
+  }
+
+  Future<Map> articleDetail(int id) async {
+    Map _result;
+
+    String _name = 'article_data';
+    List<String> _columns = ['id', 'title', 'date', 'content', 'category'];
+    String _where = 'id="$id"';
+
+    try {
+      List _data = await ApiFetch.dbFetch(_name, columns: _columns, where: _where);
+
+      if (_data.isNotEmpty) {
+        _result = _data.first;
+      }
     } catch (e) {
     }
 
@@ -92,8 +154,13 @@ class DBQuery {
   Future<List> siteHot() async {
     List _result = [];
 
+    String _name = 'site_data';
+    List<String> _columns = ['id', 'title', 'url'];
+    String _where = 'hot="y"';
+    int _limit = 8;
+
     try {
-      _result = await ApiFetch.dbFetch('site_data', columns: ['id', 'title', 'url'], where: 'hot="y"', limit: 6);
+      _result = await ApiFetch.dbFetch(_name, columns: _columns, where: _where, limit: _limit);
     } catch (e) {
     }
 

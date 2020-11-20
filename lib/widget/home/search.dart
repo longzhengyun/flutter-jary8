@@ -44,7 +44,7 @@ class HomeSearch extends StatelessWidget {
                   ),
                   color: Color(ThemeConfig.homeSearchBtnBgColor)
                 ),
-                child: Icon(IconData(0xe986, fontFamily: 'icomoon'), color: Color(ThemeConfig.defaultTextColor), size: 20 * Global.pr),
+                child: Icon(Icons.search, color: Color(ThemeConfig.defaultTextColor), size: 20 * Global.pr),
               ),
             ],
           ),
