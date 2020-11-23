@@ -13,7 +13,7 @@ class Routes {
 
   static String otherView = '/other-view';
 
-  static void configureRoutes(Router router) {
+  static void configureRoutes(FluroRouter router) {
     router.define(root, handler: indexHandler);
     router.define(search, handler: searchHandler);
     router.define(articleDetail, handler: articleDetailHandler);

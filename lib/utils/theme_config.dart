@@ -43,4 +43,7 @@ class ThemeConfig {
   static int homeSearchTextColor = color999;
   static int homeSearchBtnBgColor = colorEEE;
   static int homeListBtnColor = color999;
+
+  /// Detail
+  static int detailInfoTextColor = color999;
 }

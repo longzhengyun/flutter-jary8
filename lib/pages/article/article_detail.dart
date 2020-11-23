@@ -5,7 +5,10 @@ import 'package:flutter_easyrefresh/material_header.dart';
 import 'package:jaryapp/api/config.dart';
 import 'package:jaryapp/api/index.dart';
 import 'package:jaryapp/routes/routes.dart';
+import 'package:jaryapp/utils/global.dart';
 import 'package:jaryapp/utils/theme_config.dart';
+import 'package:jaryapp/widget/article/detail_content.dart';
+import 'package:jaryapp/widget/article/detail_info.dart';
 import 'package:jaryapp/widget/common/app_header.dart';
 import 'package:jaryapp/widget/common/hot_list.dart';
 
@@ -19,7 +22,8 @@ class ArticleDetail extends StatefulWidget {
 }
 
 class _ArticleDetailState extends State<ArticleDetail> {
-  Map _articleDetail;
+  Map _articleInfo;
+  String _articleContent;
 
   List _articleRecommend = [];
 
@@ -33,15 +37,23 @@ class _ArticleDetailState extends State<ArticleDetail> {
   /// 获取文章详情数据
   void _getArticDetail() async {
     try {
-      Map _result;
       int _id = int.parse(widget.id);
+      Map _result = await ApiFetch.apiFetch(ApiConfig.ARTICLE_DETAIL, params: { 'id': _id });
+      Map _data = _result['data'];
 
-      _result = await ApiFetch.apiFetch(ApiConfig.ARTICLE_DETAIL, params: { 'id': _id });
+      Map _info = {
+        'title': _data['title'],
+        'category': _data['category'],
+        'date': Global.formatDate(_data['date'] * 1000),
+      };
 
-      _getArticRecommend(_id, _result['data']['category']); /// 获取推荐文章数据
+      String _content = _data['content'].replaceAll('="/content/uploadfile/', '="${Global.getStaticPath()}/content/uploadfile/');
+
+      _getArticRecommend(_id, _data['category']); /// 获取推荐文章数据
 
       setState(() {
-        _articleDetail = _result['data'];
+        _articleInfo = _info;
+        _articleContent = _content;
       });
     } catch (e) {
     }
@@ -50,9 +62,7 @@ class _ArticleDetailState extends State<ArticleDetail> {
   /// 获取推荐文章数据
   void _getArticRecommend(id, category) async {
     try {
-      Map _result;
-
-      _result = await ApiFetch.apiFetch(ApiConfig.ARTICLE_RECOMMEND, params: { 'id': id, 'category': category });
+      Map _result = await ApiFetch.apiFetch(ApiConfig.ARTICLE_RECOMMEND, params: { 'id': id, 'category': category });
 
       setState(() {
         _articleRecommend = _result['data'];
@@ -61,7 +71,11 @@ class _ArticleDetailState extends State<ArticleDetail> {
     }
   }
 
-  void _onArticleTap(String key, { Map data }) {
+  void _onContentTap(String url) {
+    Routes.navigateTo(context, Routes.otherView, params: { 'url': url });
+  }
+
+  void _onRecommendTap(String key, { Map data }) {
     if (key == 'Item') {
       Routes.navigateTo(context, Routes.articleDetail, params: { 'id': data['id'].toString() });
     }
@@ -75,7 +89,9 @@ class _ArticleDetailState extends State<ArticleDetail> {
         slivers: <Widget>[
           SliverList(
             delegate: SliverChildListDelegate(<Widget>[
-              HotList('推荐文章', _articleRecommend, _onArticleTap),
+              DetailInfo(_articleInfo),
+              DetailContent(_articleContent, _onContentTap),
+              HotList('推荐文章', _articleRecommend, _onRecommendTap),
             ])
           ),
         ],

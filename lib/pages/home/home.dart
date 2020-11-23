@@ -33,9 +33,7 @@ class _HomeState extends State<Home> {
   /// 获取首页热门文章数据
   void _getArticHot() async {
     try {
-      Map _result;
-
-      _result = await ApiFetch.apiFetch(ApiConfig.ARTICLE_HOT);
+      Map _result = await ApiFetch.apiFetch(ApiConfig.ARTICLE_HOT);
 
       setState(() {
         _articleHot = _result['data'];
@@ -47,9 +45,7 @@ class _HomeState extends State<Home> {
   /// 获取首页热门网站数据
   void _getSiteHot() async {
     try {
-      Map _result;
-
-      _result = await ApiFetch.apiFetch(ApiConfig.SITE_HOT);
+      Map _result = await ApiFetch.apiFetch(ApiConfig.SITE_HOT);
 
       setState(() {
         _siteHot = _result['data'];
