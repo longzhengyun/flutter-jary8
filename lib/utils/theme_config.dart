@@ -27,6 +27,8 @@ class ThemeConfig {
   static int defaultBgColor = colorFFF; /// 通用模块背景色
   static int defaultPageBgColor = colorEEE; /// 通用页面背景色
   static int defaultBorderColor = colorDDD; /// 通用边框色
+  static int defaultMaskBgColor = colorTRANS; /// 通用遮罩背景色
+  static int defaultShadowColor = colorShadow; /// 通用阴影
 
   /// Header
   static int headerTextColor = color000;
@@ -37,6 +39,24 @@ class ThemeConfig {
   static int menuBgColor = colorTRANS;
   static int menuTextColor = color999;
   static int menuTextCurrentColor = colorTheme;
+
+  /// Btn
+  static int btnTextColor = colorTheme;
+  static int btnHighlightTextColor = colorFFF;
+  static int btnBgColor = colorFFF;
+  static int btnHighlightBgColor = colorTheme;
+  static int btnBorderColor = colorTheme;
+  static int btnDisableTextColor = color999;
+  static int btnDisableBgColor = colorDisable;
+
+  /// dialog
+  static int dialogBorderColor = colorEEE;
+  static int dialogTextColor = color666;
+  static int dialogSelectedColor = colorTheme;
+
+  ///暂无数据
+  static String nothingIcon = 'assets/images/nothing.png';
+  static int nothingTextColor = color666;
 
   /// Home
   static String homeLoginIcon = 'assets/images/logo.png';

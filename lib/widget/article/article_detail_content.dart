@@ -4,8 +4,8 @@ import 'package:jaryapp/utils/global.dart';
 import 'package:jaryapp/utils/theme_config.dart';
 import 'package:flutter_html/flutter_html.dart';
 
-class DetailContent extends StatelessWidget {
-  DetailContent(this.data, this.callback, { Key key }) : super(key: key);
+class ArticleDetailContent extends StatelessWidget {
+  ArticleDetailContent(this.data, this.callback, { Key key }) : super(key: key);
 
   final String data;
   final Function callback;

@@ -32,11 +32,11 @@ class ApiFetch {
   }
 
   /// 查询
-  static Future<List> dbFetch(String table, { List<String> columns, String where, String orderBy = 'id desc', int limit = 10 }) async {
+  static Future<List> dbFetch(String table, { List<String> columns, String where, String orderBy = 'id desc', int limit = 10, int offset = 0 }) async {
     List _result = [];
     String _path = await getPath();
     Database _db = await openDatabase(_path);
-    List<Map> _data = await _db.query(table, columns: columns, where: where, orderBy: orderBy, limit: limit);
+    List<Map> _data = await _db.query(table, columns: columns, where: where, orderBy: orderBy, limit: limit, offset: offset);
     if (_data != null && _data.isNotEmpty) {
       _data.forEach((element) {
         String _item = json.encode(element);
@@ -61,7 +61,7 @@ class ApiFetch {
       }
 
       if (_response != null) {
-        return { 'code': 0, 'data': _response, 'message': 'success' };
+        return _response;
       } else {
         throw { 'code': -1, 'message': 'error' };
       }

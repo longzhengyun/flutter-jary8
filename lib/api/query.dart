@@ -45,6 +45,14 @@ class ApiQuery {
     if (url == ApiConfig.SITE_HOT) {
       return await DBQuery().siteHot();
     }
+
+    if (url == ApiConfig.SEARCH) {
+      int _index = data['index'];
+      String _keyword = data['keyword'];
+      int _limit = data['limit'] ?? 10;
+      int _type = data['type'];
+      return await DBQuery().search(_index, _keyword, _limit, _type);
+    }
   }
 }
 
@@ -161,6 +169,31 @@ class DBQuery {
 
     try {
       _result = await ApiFetch.dbFetch(_name, columns: _columns, where: _where, limit: _limit);
+    } catch (e) {
+    }
+
+    return _result;
+  }
+
+  Future<List> search(int index, String keyword, int limit, int type) async {
+    List _result = [];
+
+    String _name = '';
+    List<String> _columns = [];
+    String _where = 'title LIKE "%$keyword%"';
+
+    if (type == 0) {
+      _name = 'article_data';
+      _columns = ['id', 'title'];
+    }
+
+    if (type == 1) {
+      _name = 'site_data';
+      _columns = ['id', 'title', 'url'];
+    }
+
+    try {
+      _result = await ApiFetch.dbFetch(_name, columns: _columns, where: _where, limit: limit, offset: index);
     } catch (e) {
     }
 

@@ -9,8 +9,8 @@ import 'package:jaryapp/utils/event_bus.dart';
 import 'package:jaryapp/utils/theme_config.dart';
 import 'package:jaryapp/widget/common/app_header.dart';
 import 'package:jaryapp/widget/common/hot_list.dart';
-import 'package:jaryapp/widget/home/logo.dart';
-import 'package:jaryapp/widget/home/search.dart';
+import 'package:jaryapp/widget/home/home_logo.dart';
+import 'package:jaryapp/widget/home/home_search.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -33,10 +33,10 @@ class _HomeState extends State<Home> {
   /// 获取首页热门文章数据
   void _getArticHot() async {
     try {
-      Map _result = await ApiFetch.apiFetch(ApiConfig.ARTICLE_HOT);
+      List _result = await ApiFetch.apiFetch(ApiConfig.ARTICLE_HOT);
 
       setState(() {
-        _articleHot = _result['data'];
+        _articleHot = _result;
       });
     } catch (e) {
     }
@@ -45,10 +45,10 @@ class _HomeState extends State<Home> {
   /// 获取首页热门网站数据
   void _getSiteHot() async {
     try {
-      Map _result = await ApiFetch.apiFetch(ApiConfig.SITE_HOT);
+      List _result = await ApiFetch.apiFetch(ApiConfig.SITE_HOT);
 
       setState(() {
-        _siteHot = _result['data'];
+        _siteHot = _result;
       });
     } catch (e) {
     }

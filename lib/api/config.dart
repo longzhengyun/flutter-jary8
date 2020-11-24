@@ -20,4 +20,7 @@ class ApiConfig {
 
   /// 推荐网站
   static const String SITE_HOT = '/sit/hot';
+
+  /// 搜索
+  static const String SEARCH = '/search';
 }

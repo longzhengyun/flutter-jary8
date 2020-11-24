@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:jaryapp/utils/global.dart';
 import 'package:jaryapp/utils/theme_config.dart';
 
-class DetailInfo extends StatelessWidget {
-  DetailInfo(this.data, { Key key }) : super(key: key);
+class ArticleDetailInfo extends StatelessWidget {
+  ArticleDetailInfo(this.data, { Key key }) : super(key: key);
 
   final Map data;
 

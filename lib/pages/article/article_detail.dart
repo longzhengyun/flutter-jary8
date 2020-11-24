@@ -7,10 +7,11 @@ import 'package:jaryapp/api/index.dart';
 import 'package:jaryapp/routes/routes.dart';
 import 'package:jaryapp/utils/global.dart';
 import 'package:jaryapp/utils/theme_config.dart';
-import 'package:jaryapp/widget/article/detail_content.dart';
-import 'package:jaryapp/widget/article/detail_info.dart';
+import 'package:jaryapp/widget/article/article_detail_content.dart';
+import 'package:jaryapp/widget/article/article_detail_info.dart';
 import 'package:jaryapp/widget/common/app_header.dart';
 import 'package:jaryapp/widget/common/hot_list.dart';
+import 'package:jaryapp/widget/common/image_dialog.dart';
 
 class ArticleDetail extends StatefulWidget {
   ArticleDetail(this.id, { Key key }) : super(key: key);
@@ -39,17 +40,16 @@ class _ArticleDetailState extends State<ArticleDetail> {
     try {
       int _id = int.parse(widget.id);
       Map _result = await ApiFetch.apiFetch(ApiConfig.ARTICLE_DETAIL, params: { 'id': _id });
-      Map _data = _result['data'];
 
       Map _info = {
-        'title': _data['title'],
-        'category': _data['category'],
-        'date': Global.formatDate(_data['date'] * 1000),
+        'title': _result['title'],
+        'category': _result['category'],
+        'date': Global.formatDate(_result['date'] * 1000),
       };
 
-      String _content = _data['content'].replaceAll('="/content/uploadfile/', '="${Global.getStaticPath()}/content/uploadfile/');
+      String _content = _result['content'].replaceAll('="/content/uploadfile/', '="${Global.getStaticPath()}/content/uploadfile/');
 
-      _getArticRecommend(_id, _data['category']); /// 获取推荐文章数据
+      _getArticRecommend(_id, _result['category']); /// 获取推荐文章数据
 
       setState(() {
         _articleInfo = _info;
@@ -59,25 +59,35 @@ class _ArticleDetailState extends State<ArticleDetail> {
     }
   }
 
+  /// 文章内容点击
+  void _onContentTap(String url) {
+    if (url.endsWith('.png') || url.endsWith('.jpg') || url.endsWith('.gif')) { /// 预览图片
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return ImageDialog({ 'url': url });
+        }
+      );
+    } else {
+      Routes.navigateTo(context, Routes.otherView, params: { 'url': url }); /// 跳转网址
+    }
+  }
+
   /// 获取推荐文章数据
   void _getArticRecommend(id, category) async {
     try {
-      Map _result = await ApiFetch.apiFetch(ApiConfig.ARTICLE_RECOMMEND, params: { 'id': id, 'category': category });
+      List _result = await ApiFetch.apiFetch(ApiConfig.ARTICLE_RECOMMEND, params: { 'id': id, 'category': category });
 
       setState(() {
-        _articleRecommend = _result['data'];
+        _articleRecommend = _result;
       });
     } catch (e) {
     }
   }
 
-  void _onContentTap(String url) {
-    Routes.navigateTo(context, Routes.otherView, params: { 'url': url });
-  }
-
   void _onRecommendTap(String key, { Map data }) {
     if (key == 'Item') {
-      Routes.navigateTo(context, Routes.articleDetail, params: { 'id': data['id'].toString() });
+      Routes.navigateTo(context, Routes.articleDetail, params: { 'id': data['id'].toString() }, replace: true);
     }
   }
 
@@ -89,8 +99,8 @@ class _ArticleDetailState extends State<ArticleDetail> {
         slivers: <Widget>[
           SliverList(
             delegate: SliverChildListDelegate(<Widget>[
-              DetailInfo(_articleInfo),
-              DetailContent(_articleContent, _onContentTap),
+              ArticleDetailInfo(_articleInfo),
+              ArticleDetailContent(_articleContent, _onContentTap),
               HotList('推荐文章', _articleRecommend, _onRecommendTap),
             ])
           ),
