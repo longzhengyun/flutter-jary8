@@ -193,7 +193,7 @@ class DBQuery {
     }
 
     try {
-      _result = await ApiFetch.dbFetch(_name, columns: _columns, where: _where, limit: limit, offset: index);
+      _result = await ApiFetch.dbFetch(_name, columns: _columns, where: _where, limit: limit, offset: index - 1);
     } catch (e) {
     }
 

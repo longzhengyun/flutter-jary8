@@ -127,7 +127,7 @@ class _SearchState extends State<Search> {
       }
 
       if (!_ishas) {
-        _list.add(_saveData);
+        _list.insert(0, _saveData);
       }
     } else {
       _list.add(_saveData);
@@ -153,6 +153,8 @@ class _SearchState extends State<Search> {
         }
 
         _index = index + 10;
+      } else {
+        _list = [];
       }
 
       setState(() {
