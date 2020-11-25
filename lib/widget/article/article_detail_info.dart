@@ -26,11 +26,11 @@ class ArticleDetailInfo extends StatelessWidget {
             children: <Widget>[
               Text('分类：${data['category']}', style: TextStyle(
                 fontSize: 12 * Global.pr,
-                color: Color(ThemeConfig.detailInfoTextColor),
+                color: Color(ThemeConfig.articleTextColor),
               )),
               Text('日期：${data['date']}', style: TextStyle(
                 fontSize: 12 * Global.pr,
-                color: Color(ThemeConfig.detailInfoTextColor),
+                color: Color(ThemeConfig.articleTextColor),
               )),
             ]
           ),

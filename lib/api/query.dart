@@ -37,8 +37,9 @@ class ApiQuery {
 
     if (url == ApiConfig.ARTICLE_LIST) {
       int _index = data['index'];
+      String _category = data['category'];
       int _limit = data['limit'] ?? 10;
-      return await DBQuery().articleList(_index, _limit);
+      return await DBQuery().articleList(_index, _category, _limit);
     }
 
     if (url == ApiConfig.ARTICLE_DETAIL) {
@@ -50,6 +51,13 @@ class ApiQuery {
 
     if (url == ApiConfig.SITE_HOT) {
       return await DBQuery().siteHot();
+    }
+
+    if (url == ApiConfig.SITE_LIST) {
+      int _index = data['index'];
+      String _category = data['category'];
+      int _limit = data['limit'] ?? 10;
+      return await DBQuery().siteList(_index, _category, _limit);
     }
 
     if (url == ApiConfig.SEARCH) {
@@ -165,14 +173,15 @@ class DBQuery {
     return _result;
   }
 
-  Future<List> articleList(int index, int limit) async {
+  Future<List> articleList(int index, String category, int limit) async {
     List _result = [];
 
     String _name = 'article_data';
-    List<String> _columns = ['id', 'title', 'description', 'date', 'category'];
+    List<String> _columns = ['id', 'title', 'description', 'date', 'category', 'hot'];
+    String _where = category.isNotEmpty ? 'category="$category"' : null;
 
     try {
-      _result = await ApiFetch.dbFetch(_name, columns: _columns, limit: limit, offset: index - 1);
+      _result = await ApiFetch.dbFetch(_name, columns: _columns, where: _where, limit: limit, offset: index - 1);
     } catch (e) {
     }
 
@@ -189,6 +198,21 @@ class DBQuery {
 
     try {
       _result = await ApiFetch.dbFetch(_name, columns: _columns, where: _where, limit: _limit);
+    } catch (e) {
+    }
+
+    return _result;
+  }
+
+  Future<List> siteList(int index, String category, int limit) async {
+    List _result = [];
+
+    String _name = 'site_data';
+    List<String> _columns = ['id', 'title', 'description', 'url', 'category', 'hot'];
+    String _where = category.isNotEmpty ? 'category="$category"' : null;
+
+    try {
+      _result = await ApiFetch.dbFetch(_name, columns: _columns, where: _where, limit: limit, offset: index - 1);
     } catch (e) {
     }
 

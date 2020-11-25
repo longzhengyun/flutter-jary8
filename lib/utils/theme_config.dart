@@ -40,6 +40,11 @@ class ThemeConfig {
   static int menuTextColor = color999;
   static int menuTextCurrentColor = colorTheme;
 
+  /// Tab
+  static int tabTextColor = color999;
+  static int tabTextCurrentColor = colorTheme;
+  static int tabBorderCurrentColor = colorTheme;
+
   /// Btn
   static int btnTextColor = colorTheme;
   static int btnHighlightTextColor = colorFFF;
@@ -49,12 +54,12 @@ class ThemeConfig {
   static int btnDisableTextColor = color999;
   static int btnDisableBgColor = colorDisable;
 
-  /// dialog
+  /// Dialog
   static int dialogBorderColor = colorEEE;
   static int dialogTextColor = color666;
   static int dialogSelectedColor = colorTheme;
 
-  ///暂无数据
+  /// Nothing
   static String nothingIcon = 'assets/images/nothing.png';
   static int nothingTextColor = color666;
 
@@ -64,6 +69,11 @@ class ThemeConfig {
   static int homeSearchBtnBgColor = colorEEE;
   static int homeListBtnColor = color999;
 
-  /// Detail
-  static int detailInfoTextColor = color999;
+  /// Article
+  static int articleTextColor = color999;
+  static int articleHotTextColor = colorTheme;
+
+  /// Site
+  static int siteTextColor = color999;
+  static int siteHotTextColor = colorTheme;
 }

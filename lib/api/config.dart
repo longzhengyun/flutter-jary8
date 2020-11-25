@@ -24,6 +24,9 @@ class ApiConfig {
   /// 推荐网站
   static const String SITE_HOT = '/sit/hot';
 
+  /// 网站列表
+  static const String SITE_LIST = '/site/list';
+
   /// 搜索
   static const String SEARCH = '/search';
 }

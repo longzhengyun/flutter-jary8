@@ -32,11 +32,11 @@ class _ArticleDetailState extends State<ArticleDetail> {
   void initState() {
     super.initState();
 
-    _getArticDetail(); /// 获取文章详情数据
+    _getArticleDetail(); /// 获取文章详情数据
   }
 
   /// 获取文章详情数据
-  void _getArticDetail() async {
+  void _getArticleDetail() async {
     try {
       int _id = int.parse(widget.id);
       Map _result = await ApiFetch.apiFetch(ApiConfig.ARTICLE_DETAIL, params: { 'id': _id });
@@ -49,7 +49,7 @@ class _ArticleDetailState extends State<ArticleDetail> {
 
       String _content = _result['content'].replaceAll('="/content/uploadfile/', '="${Global.getStaticPath()}/content/uploadfile/');
 
-      _getArticRecommend(_id, _result['category']); /// 获取推荐文章数据
+      _getArticleRecommend(_id, _result['category']); /// 获取推荐文章数据
 
       setState(() {
         _articleInfo = _info;
@@ -74,7 +74,7 @@ class _ArticleDetailState extends State<ArticleDetail> {
   }
 
   /// 获取推荐文章数据
-  void _getArticRecommend(id, category) async {
+  void _getArticleRecommend(id, category) async {
     try {
       List _result = await ApiFetch.apiFetch(ApiConfig.ARTICLE_RECOMMEND, params: { 'id': id, 'category': category });
 
@@ -109,7 +109,7 @@ class _ArticleDetailState extends State<ArticleDetail> {
           valueColor: AlwaysStoppedAnimation(Color(ThemeConfig.loadingColor)),
         ),
         onRefresh: () async {
-          _getArticDetail(); /// 获取文章详情数据
+          _getArticleDetail(); /// 获取文章详情数据
         }
       )
     );

@@ -19,7 +19,6 @@ class _MineState extends State<Mine> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: UniqueKey(),
       appBar: AppHeader(title: '我的', hideBack: true),
       body: EasyRefresh.custom(
         slivers: <Widget>[],

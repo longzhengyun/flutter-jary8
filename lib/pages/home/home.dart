@@ -26,12 +26,12 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
 
-    _getArticHot(); /// 获取首页热门文章数据
+    _getArticleHot(); /// 获取首页热门文章数据
     _getSiteHot(); /// 获取首页热门网站数据
   }
 
   /// 获取首页热门文章数据
-  void _getArticHot() async {
+  void _getArticleHot() async {
     try {
       List _result = await ApiFetch.apiFetch(ApiConfig.ARTICLE_HOT);
 
@@ -81,7 +81,6 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: UniqueKey(),
       appBar: AppHeader(hideBack: true),
       body: EasyRefresh.custom(
         slivers: <Widget>[
@@ -98,7 +97,7 @@ class _HomeState extends State<Home> {
           valueColor: AlwaysStoppedAnimation(Color(ThemeConfig.loadingColor)),
         ),
         onRefresh: () async {
-          _getArticHot(); /// 获取首页热门文章数据
+          _getArticleHot(); /// 获取首页热门文章数据
           _getSiteHot(); /// 获取首页热门网站数据
         }
       )

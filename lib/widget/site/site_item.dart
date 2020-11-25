@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:jaryapp/utils/global.dart';
 import 'package:jaryapp/utils/theme_config.dart';
 
-class ArticleItem extends StatelessWidget {
-  ArticleItem(this.data, this.callback, { Key key }) : super(key: key);
+class SiteItem extends StatelessWidget {
+  SiteItem(this.data, this.callback, { Key key }) : super(key: key);
 
   final Map data;
   final Function callback;
@@ -42,7 +42,7 @@ class ArticleItem extends StatelessWidget {
                 maxLines: 3,
                 style: TextStyle(
                   fontSize: 14 * Global.pr,
-                  color: Color(ThemeConfig.articleTextColor),
+                  color: Color(ThemeConfig.siteTextColor),
                 )
               ),
             ),
@@ -50,19 +50,10 @@ class ArticleItem extends StatelessWidget {
               margin: EdgeInsets.only(top: 10 * Global.pr),
               child: Row(
                 children: <Widget>[
-                  Text(Global.formatDate(data['date'] * 1000, formatString: 'yyyy-MM-dd'),
-                    style: TextStyle(
-                      fontSize: 12 * Global.pr,
-                      color: Color(ThemeConfig.articleTextColor),
-                    )
-                  ),
-                  Container(
-                    width: 20 * Global.pr,
-                  ),
                   Text(data['category'],
                     style: TextStyle(
                       fontSize: 12 * Global.pr,
-                      color: Color(ThemeConfig.articleTextColor),
+                      color: Color(ThemeConfig.siteTextColor),
                     )
                   ),
                   Container(
@@ -71,7 +62,7 @@ class ArticleItem extends StatelessWidget {
                   data['hot'] == 'y' ? Text('HOT',
                     style: TextStyle(
                       fontSize: 12 * Global.pr,
-                      color: Color(ThemeConfig.articleHotTextColor),
+                      color: Color(ThemeConfig.siteHotTextColor),
                     )
                   ) : Container(),
                 ],
