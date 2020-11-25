@@ -11,10 +11,12 @@ import 'package:jaryapp/api/config.dart';
 class ApiFetch {
   static String _dbName = 'jary_data.db';
   static String _defaultData = join('assets', 'data/$_dbName');
+  static Database _db;
 
-  /// 初始化
-  static void init() async {
-    String _path = await getPath();
+  /// 打开数据库
+  static Future initDB() async {
+    String _databasesPath = await getDatabasesPath();
+    String _path = join(_databasesPath, _dbName);
 
     bool _exists = await databaseExists(_path);
     if(!_exists) {
@@ -23,19 +25,22 @@ class ApiFetch {
 
       await new File(_path).writeAsBytes(_bytes);
     }
+
+    _db = await openDatabase(_path);
   }
 
-  /// 获取路径
-  static Future<String> getPath() async {
-    String _databasesPath = await getDatabasesPath();
-    return join(_databasesPath, _dbName);
+  /// 关闭数据库
+  static void close() async {
+    return await _db.close();
   }
 
   /// 查询
   static Future<List> dbFetch(String table, { List<String> columns, String where, String orderBy = 'id desc', int limit = 10, int offset = 0 }) async {
     List _result = [];
-    String _path = await getPath();
-    Database _db = await openDatabase(_path);
+
+    /// 判断是否打开数据库
+    if (_db == null) await initDB();
+
     List<Map> _data = await _db.query(table, columns: columns, where: where, orderBy: orderBy, limit: limit, offset: offset);
     if (_data != null && _data.isNotEmpty) {
       _data.forEach((element) {
@@ -43,8 +48,6 @@ class ApiFetch {
         _result.add(json.decode(_item));
       });
     }
-
-    await _db.close();
     return _result;
   }
 

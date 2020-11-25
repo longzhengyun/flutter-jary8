@@ -22,7 +22,7 @@ class _SelectDialogState extends State<SelectDialog> {
     for (var item in widget.data) {
       _option.add(GestureDetector(
         behavior: HitTestBehavior.opaque, /// 解决点击空白处无效问题
-        onTap: () => widget.callback(item),
+        onTap: () => widget.callback(data: item),
         child: Container(
           height: 48 * Global.pr,
           margin: EdgeInsets.only(left: 20 * Global.pr, right: 20 * Global.pr, bottom: 10 * Global.pr),
@@ -68,7 +68,7 @@ class _SelectDialogState extends State<SelectDialog> {
       backgroundColor: Color(ThemeConfig.defaultMaskBgColor),
       body: GestureDetector(
         behavior: HitTestBehavior.opaque, /// 解决点击空白处无效问题
-        onTap: () => widget.callback(null),
+        onTap: () => widget.callback(),
         child: Container(
           alignment: Alignment.bottomCenter,
           child: Column(

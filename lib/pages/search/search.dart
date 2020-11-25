@@ -7,6 +7,7 @@ import 'package:flutter_easyrefresh/material_header.dart';
 import 'package:jaryapp/api/config.dart';
 import 'package:jaryapp/api/index.dart';
 import 'package:jaryapp/routes/routes.dart';
+import 'package:jaryapp/utils/global.dart';
 import 'package:jaryapp/utils/prefs.dart';
 import 'package:jaryapp/utils/theme_config.dart';
 import 'package:jaryapp/widget/common/app_header.dart';
@@ -79,15 +80,13 @@ class _SearchState extends State<Search> {
     }
 
     if (key == 'Search' && _searchText.isNotEmpty) {
-      FocusScope.of(context).requestFocus(FocusNode()); /// 点击空白处隐藏键盘
-
       _changeSearchType(1, searchText: _searchText);
       _getSearchData(1, _searchText, _selectValue);
       _saveHistorySearch(_searchText, _selectValue); /// 保存搜索记录
     }
   }
 
-  void _onSelectDialogTap(Map data) {
+  void _onSelectDialogTap({ Map data }) {
     Navigator.pop(context);
 
     if (data != null) {
@@ -119,7 +118,7 @@ class _SearchState extends State<Search> {
     if (_historySearch != null) {
       _list = json.decode(_historySearch);
 
-      bool _ishas = false; /// 是否包涵当前搜索内容
+      bool _ishas = false; /// 是否包含当前搜索内容
       for (var item in _list) {
         if (item['title'] == _saveData['title'] && item['selectValue'] == _saveData['selectValue']) {
           _ishas = true;
@@ -138,6 +137,13 @@ class _SearchState extends State<Search> {
 
   /// 获取搜索数据
   void _getSearchData(int index, String searchText, int selectValue) async {
+    FocusScope.of(context).requestFocus(FocusNode()); /// 点击空白处隐藏键盘
+
+    /// 搜索内容为空时阻止获取数据
+    if (searchText.isEmpty) {
+      return;
+    }
+
     try {
       Map _params = { 'index': index, 'keyword': searchText, 'type': selectValue };
 
@@ -145,7 +151,7 @@ class _SearchState extends State<Search> {
 
       int _index = _searchIndex;
       List _list = _searchList;
-      if (_result.isNotEmpty) {
+      if (_result.isNotEmpty) { /// 有数据时，向列表添加数据
         if (index == 1) {
           _list = _result;
         } else {
@@ -153,8 +159,11 @@ class _SearchState extends State<Search> {
         }
 
         _index = index + 10;
-      } else {
-        _list = [];
+      } else { /// 未搜索到数据时，置空列表
+        if (index == 1) {
+          _index = 1;
+          _list = [];
+        }
       }
 
       setState(() {
@@ -211,36 +220,41 @@ class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppHeader(title: '搜索'),
-      body: EasyRefresh.custom(
-        slivers: <Widget>[
-          SliverList(
-            delegate: SliverChildListDelegate(<Widget>[
-              SearchAction(_selectText, _searchText, _onSearchTap),
-              _searchList.isNotEmpty ? SearchTitle(_searchTitle, _onClearTap) : Container(),
-            ])
-          ),
-          SliverList(
-            delegate: _searchList.isNotEmpty ? SliverChildBuilderDelegate((BuildContext context, int index) {
-              return SearchItem(_searchList[index], index, _onItemTap);
-            }, childCount: _searchList.length) : SliverChildListDelegate(<Widget>[
-              Nothing()
-            ]),
+      appBar: AppHeader(title: '全站搜索'),
+      body: Column(
+        children: <Widget>[
+          SearchAction(_selectText, _searchText, _onSearchTap),
+          _searchList.isNotEmpty ? SearchTitle(_searchTitle, _onClearTap) : Container(),
+          Expanded(
+            child: EasyRefresh.custom(
+              slivers: <Widget>[
+                _searchList.isNotEmpty ? SliverFixedExtentList(
+                  itemExtent: 40 * Global.pr,
+                  delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                    return SearchItem(_searchList[index], index, _onItemTap);
+                  }, childCount: _searchList.length),
+                ) : SliverList(
+                  delegate: SliverChildListDelegate(<Widget>[
+                    Nothing()
+                  ]),
+                ),
+              ],
+              header: MaterialHeader(
+                valueColor: AlwaysStoppedAnimation(Color(ThemeConfig.loadingColor)),
+              ),
+              onRefresh: () async {
+                _getSearchData(1, _searchText, _selectValue);
+              },
+              footer: MaterialFooter(
+                valueColor: AlwaysStoppedAnimation(Color(ThemeConfig.loadingColor)),
+                enableInfiniteLoad: false, /// 关闭无限加载模式
+              ),
+              onLoad: () async {
+                _getSearchData(_searchIndex, _searchText, _selectValue);
+              },
+            )
           )
-        ],
-        header: MaterialHeader(
-          valueColor: AlwaysStoppedAnimation(Color(ThemeConfig.loadingColor)),
-        ),
-        onRefresh: () async {
-          _getSearchData(1, _searchText, _selectValue);
-        },
-        footer: MaterialFooter(
-          valueColor: AlwaysStoppedAnimation(Color(ThemeConfig.loadingColor)),
-          enableInfiniteLoad: false, /// 关闭无限加载模式
-        ),
-        onLoad: () async {
-          _getSearchData(_searchIndex, _searchText, _selectValue);
-        },
+        ]
       )
     );
   }

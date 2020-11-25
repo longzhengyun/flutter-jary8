@@ -24,9 +24,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
     for (var item in action) {
       _option.add(GestureDetector(
         behavior: HitTestBehavior.opaque, /// 解决点击空白处无效问题
-        onTap: () {
-          callback(item['key']);
-        },
+        onTap: () => callback(item['key']),
         child: Container(
           alignment: Alignment.center,
           padding: EdgeInsets.only(left: 16 * Global.pr, right: 16 * Global.pr,),

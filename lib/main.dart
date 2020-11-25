@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluro/fluro.dart';
-import 'package:jaryapp/api/index.dart';
 import 'package:jaryapp/routes/application.dart';
 import 'package:jaryapp/routes/routes.dart';
 import 'package:jaryapp/utils/theme_config.dart';
@@ -28,8 +27,6 @@ class _MyAppState extends State<MyApp> {
     final router = FluroRouter();
     Routes.configureRoutes(router);
     Application.router = router;
-
-    ApiFetch.init();
   }
 
   @override

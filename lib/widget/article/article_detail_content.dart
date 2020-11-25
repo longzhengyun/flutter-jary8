@@ -18,9 +18,7 @@ class ArticleDetailContent extends StatelessWidget {
       margin: EdgeInsets.only(top: 10 * Global.pr),
       child: Html(
         data: data,
-        onLinkTap: (url) {
-          if (url.contains('http')) callback(url);
-        },
+        onLinkTap: (url) => url.contains('http') ? callback(url): null,
         style: {
           'pre': Style(
             fontSize: FontSize(12 * Global.pr),

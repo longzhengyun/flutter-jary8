@@ -89,13 +89,7 @@ class _ImageDialogState extends State<ImageDialog> {
                       widget.confirm != null ? Expanded(
                         child: GestureDetector(
                           behavior: HitTestBehavior.opaque, /// 解决点击空白处无效问题
-                          onTap: () {
-                            if (widget.callback != null) {
-                              widget.callback(data: widget.data);
-                            } else {
-                              Navigator.pop(context);
-                            }
-                          },
+                          onTap: () => widget.callback != null ? widget.callback(data: widget.data) : Navigator.pop(context),
                           child: Container(
                             padding: EdgeInsets.all(10 * Global.pr),
                             child: AppBtn(widget.confirm, isHighlight: true)

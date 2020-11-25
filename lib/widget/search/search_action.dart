@@ -67,9 +67,7 @@ class SearchAction extends StatelessWidget {
                     isDense: true,
                     counterText: '',
                   ),
-                  onChanged: (text) {
-                    callback('Input', data: text);
-                  },
+                  onChanged: (text) => callback('Input', data: text),
                 )
               ),
             ),

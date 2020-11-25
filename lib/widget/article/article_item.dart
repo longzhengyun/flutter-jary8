@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:jaryapp/utils/global.dart';
 import 'package:jaryapp/utils/theme_config.dart';
 
-class SearchItem extends StatelessWidget {
-  SearchItem(this.data, this.index, this.callback, { Key key }) : super(key: key);
+class ArticleItem extends StatelessWidget {
+  ArticleItem(this.data, this.callback, { Key key }) : super(key: key);
 
   final Map data;
-  final int index;
   final Function callback;
 
   @override
@@ -20,9 +19,12 @@ class SearchItem extends StatelessWidget {
         color: Color(ThemeConfig.defaultBgColor),
         child: Container(
           alignment: Alignment.centerLeft,
-          decoration: index != 0 ? BoxDecoration(
-            border: Border(top: BorderSide(color: Color(ThemeConfig.defaultBorderColor), width: 0.5)),
-          ) : null,
+          decoration: BoxDecoration(
+            border: Border(
+              top: BorderSide(color: Color(ThemeConfig.defaultBorderColor), width: 0.5),
+              bottom: BorderSide(color: Color(ThemeConfig.defaultBorderColor), width: 0.5),
+            ),
+          ),
           child: Text(data['title'],
             style: TextStyle(
               fontSize: 14 * Global.pr,

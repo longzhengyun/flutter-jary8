@@ -12,6 +12,9 @@ class ApiConfig {
   /// 热门文章
   static const String ARTICLE_HOT = '/article/hot';
 
+  /// 文章列表
+  static const String ARTICLE_LIST = '/article/list';
+
   /// 推荐文章
   static const String ARTICLE_RECOMMEND = '/article/recommend';
 

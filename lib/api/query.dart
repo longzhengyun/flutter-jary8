@@ -35,6 +35,12 @@ class ApiQuery {
       }
     }
 
+    if (url == ApiConfig.ARTICLE_LIST) {
+      int _index = data['index'];
+      int _limit = data['limit'] ?? 10;
+      return await DBQuery().articleList(_index, _limit);
+    }
+
     if (url == ApiConfig.ARTICLE_DETAIL) {
       int _id = data['id'];
       if (_id is int) {
@@ -153,6 +159,20 @@ class DBQuery {
       if (_data.isNotEmpty) {
         _result = _data.first;
       }
+    } catch (e) {
+    }
+
+    return _result;
+  }
+
+  Future<List> articleList(int index, int limit) async {
+    List _result = [];
+
+    String _name = 'article_data';
+    List<String> _columns = ['id', 'title', 'description', 'date', 'category'];
+
+    try {
+      _result = await ApiFetch.dbFetch(_name, columns: _columns, limit: limit, offset: index - 1);
     } catch (e) {
     }
 
