@@ -7,6 +7,7 @@ import 'package:jaryapp/api/index.dart';
 import 'package:jaryapp/manager/user.dart';
 import 'package:jaryapp/models/index.dart';
 import 'package:jaryapp/routes/routes.dart';
+import 'package:jaryapp/utils/event_bus.dart';
 import 'package:jaryapp/utils/global.dart';
 import 'package:jaryapp/utils/theme_config.dart';
 import 'package:jaryapp/widget/common/app_header.dart';
@@ -29,6 +30,18 @@ class _MineState extends State<Mine> {
 
     _getUserInfo();
     _checkLogin();
+
+    /// 监听登录状态改变通知
+    EventBus.instance.addListener(EventKeys.LoginState, (arg) {
+      _checkLogin(); /// 获取登录信息
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    EventBus.instance.removeListener(EventKeys.LoginState); /// 移除登录状态改变通知监听
   }
 
   /// 获取登录信息
@@ -68,18 +81,12 @@ class _MineState extends State<Mine> {
 
   void _changeLinkList(bool state) {
     List _list = [];
-    _list.addAll([
-      { 'text': '关于佳瑞网', 'route': Routes.otherView },
-      { 'text': '佳瑞网APP', 'route': Routes.otherView },
-    ]);
+    _list.add({ 'text': '关于佳瑞网', 'route': Routes.about });
 
     if (state) {
-      _list.addAll([
-        { 'text': '个人简历', 'route': Routes.otherView },
-        { 'text': '设置', 'route': Routes.otherView }
-      ]);
+      _list.add({ 'text': '个人简历', 'route': Routes.resume });
     } else {
-      _list.add({ 'text': '登录', 'route': Routes.otherView });
+      _list.add({ 'text': '登录', 'route': Routes.login });
     }
 
     setState(() {
@@ -97,8 +104,7 @@ class _MineState extends State<Mine> {
       appBar: AppHeader(title: '我的', hideBack: true),
       body: EasyRefresh.custom(
         slivers: <Widget>[
-          SliverFixedExtentList(
-            itemExtent: 46 * Global.pr,
+          SliverList(
             delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
               return TableItem(_tableList[index], index);
             }, childCount: _tableList.length),

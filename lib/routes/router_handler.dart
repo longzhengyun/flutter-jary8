@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 import 'package:jaryapp/pages/article/article_detail.dart';
 import 'package:jaryapp/pages/index.dart';
+import 'package:jaryapp/pages/login/login.dart';
+import 'package:jaryapp/pages/mine/about.dart';
+import 'package:jaryapp/pages/mine/version.dart';
 import 'package:jaryapp/pages/webview/other_view.dart';
 import 'package:jaryapp/pages/search/search.dart';
 
@@ -19,6 +22,26 @@ Handler searchHandler = Handler(handlerFunc: (BuildContext context, Map<String, 
 Handler articleDetailHandler = Handler(handlerFunc: (BuildContext context, Map<String, List<String>> params) {
   String _id = params['id']?.first;
   return ArticleDetail(_id);
+});
+
+/// 关于佳瑞网
+Handler aboutHandler = Handler(handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  return About();
+});
+
+/// 大事记
+Handler versionHandler = Handler(handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  return Version();
+});
+
+/// 个人简历
+Handler resumeHandler = Handler(handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  return Version();
+});
+
+/// 登录
+Handler loginHandler = Handler(handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  return Login();
 });
 
 /// 外部站点webview

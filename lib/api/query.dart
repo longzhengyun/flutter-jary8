@@ -15,6 +15,14 @@ String generateMd5(String data) {
 
 class ApiQuery {
   static Future dbQuery(String url, { Map data }) async {
+    if (url == ApiConfig.USER_LOGIN) {
+      String _userName = data['userName'];
+      String _password = data['password'];
+      if (_userName.isNotEmpty && _password.isNotEmpty) {
+        return await DBQuery().userLogin(_userName, _password);
+      }
+    }
+
     if (url == ApiConfig.USER_CHECK_LOGIN) {
       return await DBQuery().userCheckLogin();
     }
@@ -71,6 +79,38 @@ class ApiQuery {
 }
 
 class DBQuery {
+  Future<Map> userLogin(String userName, String password) async {
+    Map _result;
+
+    String _name = 'admin_data';
+    List<String> _columns = ['id', 'username', 'password', 'nickname'];
+
+    try {
+      List _data = await ApiFetch.dbFetch(_name, columns: _columns);
+
+      String _dbToken = '';
+      Map _loginInfo = {
+        'time': DateTime.now().millisecondsSinceEpoch
+      };
+      _data.forEach((element) {
+        if (element['username'] == userName && element['password'] == password) {
+          _dbToken = generateMd5(json.encode({ 'id': element['id'], 'username': element['username'], 'nickname': element['nickname'] }));
+          _loginInfo.addAll(element);
+        }
+      });
+
+      if (_dbToken.isNotEmpty) {
+        await Prefs.setStringValue(Prefs.KEY_LOGIN_TOKEN, _dbToken);
+        await Prefs.setStringValue(Prefs.KEY_LOGIN_INFO, json.encode(_loginInfo));
+
+        _result = {};
+      }
+    } catch (e) {
+    }
+
+    return _result;
+  }
+
   Future<Map> userCheckLogin() async {
     Map _result;
 
@@ -89,7 +129,7 @@ class DBQuery {
         if (_time -_loginInfo['time'] < 1000 * 60 * 60 * 24 * 7) {
           _data.forEach((element) {
             String _dbToken = generateMd5(json.encode(element));
-            if (_dbToken == _loginToken && element['username'] == _loginInfo['name']) {
+            if (_dbToken == _loginToken && element['username'] == _loginInfo['username']) {
               _result = element;
             }
           });

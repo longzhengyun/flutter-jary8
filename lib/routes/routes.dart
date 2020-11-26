@@ -11,12 +11,22 @@ class Routes {
 
   static String articleDetail = '/article-detail';
 
+  static String about = '/about';
+  static String version = '/version';
+  static String resume = '/resume';
+
+  static String login = '/login';
+
   static String otherView = '/other-view';
 
   static void configureRoutes(FluroRouter router) {
     router.define(root, handler: indexHandler);
     router.define(search, handler: searchHandler);
     router.define(articleDetail, handler: articleDetailHandler);
+    router.define(about, handler: aboutHandler);
+    router.define(version, handler: versionHandler);
+    router.define(resume, handler: resumeHandler);
+    router.define(login, handler: loginHandler);
     router.define(otherView, handler: otherViewHandler);
   }
 

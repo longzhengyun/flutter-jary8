@@ -30,7 +30,16 @@ class LinkItem extends StatelessWidget {
                 height: 1,
                 color: Color(ThemeConfig.defaultTextColor),
               )),
-              Icon(Icons.arrow_forward_ios, color: Color(ThemeConfig.linkTextColor), size: 20 * Global.pr),
+              Row(
+                children: <Widget>[
+                  data['value'] != null ? Text(data['value'], style: TextStyle(
+                    fontSize: 16 * Global.pr,
+                    height: 1,
+                    color: Color(ThemeConfig.linkTextColor),
+                  )) : Container(),
+                  Icon(Icons.arrow_forward_ios, color: Color(ThemeConfig.linkTextColor), size: 20 * Global.pr),
+                ],
+              ),
             ]
           ),
         )

@@ -3,6 +3,9 @@ class AppConfig {
 }
 
 class ApiConfig {
+  /// 检查登录
+  static const String USER_LOGIN = '/user/login';
+
   /// 检查是否登录
   static const String USER_CHECK_LOGIN = '/user/check-login';
 

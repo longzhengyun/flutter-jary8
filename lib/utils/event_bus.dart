@@ -43,5 +43,6 @@ class EventBus {
 }
 
 class EventKeys {
+  static const String LoginState = 'LoginState';
   static const String ChangeMenu = 'ChangeMenu';
 }
