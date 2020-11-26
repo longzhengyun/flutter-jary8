@@ -16,7 +16,7 @@ class SearchTitle extends StatelessWidget {
         color: Color(ThemeConfig.defaultBgColor)
       ),
       margin: EdgeInsets.only(top: 10 * Global.pr),
-      padding: EdgeInsets.only(left: 20 * Global.pr, right: 20 * Global.pr, top: 10 * Global.pr, bottom: 10 * Global.pr),
+      padding: EdgeInsets.only(left: 20 * Global.pr, right: 20 * Global.pr, top: 15 * Global.pr, bottom: 15 * Global.pr),
       child: Row(
         children: <Widget>[
           Expanded(

@@ -63,6 +63,12 @@ class ThemeConfig {
   static String nothingIcon = 'assets/images/nothing.png';
   static int nothingTextColor = color666;
 
+  /// Table
+  static int tableTextColor = color999;
+
+  /// Link
+  static int linkTextColor = colorDDD;
+
   /// Home
   static String homeLoginIcon = 'assets/images/logo.png';
   static int homeSearchTextColor = color999;

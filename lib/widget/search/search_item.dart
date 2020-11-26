@@ -15,7 +15,6 @@ class SearchItem extends StatelessWidget {
       behavior: HitTestBehavior.opaque, /// 解决点击空白处无效问题
       onTap: () => callback(data),
       child: Container(
-        height: 40 * Global.pr,
         padding: EdgeInsets.only(left: 20 * Global.pr, right: 20 * Global.pr),
         color: Color(ThemeConfig.defaultBgColor),
         child: Container(

@@ -229,7 +229,7 @@ class _SearchState extends State<Search> {
             child: EasyRefresh.custom(
               slivers: <Widget>[
                 _searchList.isNotEmpty ? SliverFixedExtentList(
-                  itemExtent: 40 * Global.pr,
+                  itemExtent: 46 * Global.pr,
                   delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
                     return SearchItem(_searchList[index], index, _onItemTap);
                   }, childCount: _searchList.length),
