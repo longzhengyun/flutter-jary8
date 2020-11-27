@@ -13,7 +13,9 @@ class Routes {
 
   static String about = '/about';
   static String version = '/version';
+
   static String resume = '/resume';
+  static String evaluation = '/evaluation';
 
   static String login = '/login';
 
@@ -26,6 +28,7 @@ class Routes {
     router.define(about, handler: aboutHandler);
     router.define(version, handler: versionHandler);
     router.define(resume, handler: resumeHandler);
+    router.define(evaluation, handler: evaluationHandler);
     router.define(login, handler: loginHandler);
     router.define(otherView, handler: otherViewHandler);
   }

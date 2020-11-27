@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:jaryapp/api/api_query.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:flutter/services.dart';
 
-import 'package:jaryapp/api/query.dart';
 import 'package:jaryapp/api/config.dart';
 
 class ApiFetch {

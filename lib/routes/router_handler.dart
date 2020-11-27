@@ -5,6 +5,8 @@ import 'package:jaryapp/pages/index.dart';
 import 'package:jaryapp/pages/login/login.dart';
 import 'package:jaryapp/pages/mine/about.dart';
 import 'package:jaryapp/pages/mine/version.dart';
+import 'package:jaryapp/pages/resume/evaluation.dart';
+import 'package:jaryapp/pages/resume/resume.dart';
 import 'package:jaryapp/pages/webview/other_view.dart';
 import 'package:jaryapp/pages/search/search.dart';
 
@@ -34,9 +36,14 @@ Handler versionHandler = Handler(handlerFunc: (BuildContext context, Map<String,
   return Version();
 });
 
-/// 个人简历
+/// resume
 Handler resumeHandler = Handler(handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-  return Version();
+  return Resume();
+});
+
+/// 职业评价
+Handler evaluationHandler = Handler(handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  return Evaluation();
 });
 
 /// 登录

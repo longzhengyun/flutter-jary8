@@ -70,7 +70,7 @@ class ThemeConfig {
   static int linkTextColor = colorDDD;
 
   /// Home
-  static String homeLoginIcon = 'assets/images/logo.png';
+  static String homeIcon = 'assets/images/logo.png';
   static int homeSearchTextColor = color999;
   static int homeSearchBtnBgColor = colorEEE;
   static int homeListBtnColor = color999;
@@ -82,4 +82,8 @@ class ThemeConfig {
   /// Site
   static int siteTextColor = color999;
   static int siteHotTextColor = colorTheme;
+
+  /// Resume
+  static String resumeIcon = 'assets/images/jary.jpg';
+  static int resumeTextColor = color999;
 }

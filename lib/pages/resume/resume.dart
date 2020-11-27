@@ -4,94 +4,64 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_easyrefresh/material_header.dart';
 import 'package:jaryapp/api/config.dart';
 import 'package:jaryapp/api/index.dart';
-import 'package:jaryapp/manager/user.dart';
-import 'package:jaryapp/models/index.dart';
 import 'package:jaryapp/routes/routes.dart';
-import 'package:jaryapp/utils/event_bus.dart';
 import 'package:jaryapp/utils/global.dart';
 import 'package:jaryapp/utils/theme_config.dart';
 import 'package:jaryapp/widget/common/app_header.dart';
 import 'package:jaryapp/widget/common/link_item.dart';
 import 'package:jaryapp/widget/common/table_item.dart';
+import 'package:jaryapp/widget/resume/resume_icon.dart';
 
-class Mine extends StatefulWidget {
+class Resume extends StatefulWidget {
   @override
-  _MineState createState() => _MineState();
+  _ResumeState createState() => _ResumeState();
 }
 
-class _MineState extends State<Mine> {
-  List _tableList = [];
+class _ResumeState extends State<Resume> {
+  List _baseList = [];
 
-  List _linkList = [];
+  List _detailList = [];
+
+  List _linkList = [
+    { 'text': '个人案例', 'route': Routes.otherView },
+    { 'text': '职业评价', 'route': Routes.evaluation },
+    { 'text': '职业技能', 'route': Routes.otherView },
+    { 'text': '工作经历', 'route': Routes.otherView },
+    { 'text': '其他信息', 'route': Routes.otherView },
+  ];
 
   @override
   void initState() {
     super.initState();
 
-    _getUserInfo();
-    _checkLogin();
-
-    /// 监听登录状态改变通知
-    EventBus.instance.addListener(EventKeys.LoginState, (arg) {
-      _checkLogin(); /// 获取登录信息
-    });
+    _getUserDetail();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-
-    EventBus.instance.removeListener(EventKeys.LoginState); /// 移除登录状态改变通知监听
-  }
-
-  /// 获取登录信息
-  void _checkLogin() async {
-    Map _result;
-    bool _state = false;
-
+  /// 获取用户详细信息数据
+  void _getUserDetail() async {
     try {
-      _result = await ApiFetch.apiFetch(ApiConfig.USER_CHECK_LOGIN);
-      _state = true;
-    } catch (e) {
-    }
-
-    UserManager _userManager = UserManager();
-    _userManager.user = _state ? User.fromJson(_result) : null;
-
-    _changeLinkList(_state);
-  }
-
-  /// 获取用户信息数据
-  void _getUserInfo() async {
-    try {
-      Map _result = await ApiFetch.apiFetch(ApiConfig.USER_INFO);
+      Map _result = await ApiFetch.apiFetch(ApiConfig.USER_DETAIL);
 
       setState(() {
-        _tableList = [
-          { 'text': '英文名', 'value': _result['nickname'] },
+        _baseList = [
+          { 'text': '姓名', 'value': _result['nickname'] },
+          { 'text': '年龄', 'value': Global.formatYear(_result['birthday']) },
+          { 'text': '手机', 'value': _result['phone'].toString() },
           { 'text': 'Email', 'value': _result['email'] },
-          { 'text': '城市', 'value': _result['city'] },
+          { 'text': 'GitHub', 'value': _result['github'] },
+        ];
+
+        _detailList = [
+          { 'text': '学历', 'value': _result['degrees'] },
+          { 'text': '专业', 'value': _result['major'] },
           { 'text': '职业', 'value': _result['job'] },
-          { 'text': '签名', 'value': _result['motto'] },
+          { 'text': '工作年限', 'value': Global.formatYear(_result['worklife']) },
+          { 'text': '工作状态', 'value': _result['state'] },
+          { 'text': '期望年薪', 'value': _result['salary'].toString() },
         ];
       });
     } catch (e) {
     }
-  }
-
-  void _changeLinkList(bool state) {
-    List _list = [];
-    _list.add({ 'text': '关于佳瑞网', 'route': Routes.about });
-
-    if (state) {
-      _list.add({ 'text': '个人简历', 'route': Routes.resume });
-    } else {
-      _list.add({ 'text': '登录', 'route': Routes.login });
-    }
-
-    setState(() {
-      _linkList = _list;
-    });
   }
 
   void _onLinkTap(Map data) {
@@ -101,9 +71,19 @@ class _MineState extends State<Mine> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppHeader(title: '我的', hideBack: true),
+      appBar: AppHeader(title: 'Resume'),
       body: EasyRefresh.custom(
         slivers: <Widget>[
+          SliverList(
+            delegate: SliverChildListDelegate(<Widget>[
+              ResumeIcon()
+            ])
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+              return TableItem(_baseList[index], index);
+            }, childCount: _baseList.length),
+          ),
           SliverList(
             delegate: SliverChildListDelegate(<Widget>[
               Container(
@@ -113,8 +93,8 @@ class _MineState extends State<Mine> {
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-              return TableItem(_tableList[index], index);
-            }, childCount: _tableList.length),
+              return TableItem(_detailList[index], index);
+            }, childCount: _detailList.length),
           ),
           SliverList(
             delegate: SliverChildListDelegate(<Widget>[
@@ -134,7 +114,7 @@ class _MineState extends State<Mine> {
           valueColor: AlwaysStoppedAnimation(Color(ThemeConfig.loadingColor)),
         ),
         onRefresh: () async {
-          _getUserInfo(); /// 获取用户信息数据
+          _getUserDetail(); /// 获取用户详细信息数据
         }
       )
     );

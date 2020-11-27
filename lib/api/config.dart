@@ -9,8 +9,11 @@ class ApiConfig {
   /// 检查是否登录
   static const String USER_CHECK_LOGIN = '/user/check-login';
 
-  /// 获取用户信息
+  /// 获取用户基本信息
   static const String USER_INFO = '/user/info';
+
+  /// 获取用户详细信息
+  static const String USER_DETAIL = '/user/detail';
 
   /// 热门文章
   static const String ARTICLE_HOT = '/article/hot';
