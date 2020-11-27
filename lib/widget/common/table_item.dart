@@ -25,7 +25,7 @@ class TableItem extends StatelessWidget {
           children: <Widget>[
             Container(
               width: 80 * Global.pr,
-              child: Text(data['text'], style: TextStyle(
+              child: Text(data['text'], softWrap: false, overflow: TextOverflow.visible, style: TextStyle(
                 fontSize: 16 * Global.pr,
                 color: Color(ThemeConfig.tableTextColor),
               )),

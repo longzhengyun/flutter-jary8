@@ -7,19 +7,22 @@ import 'package:jaryapp/routes/router_handler.dart';
 class Routes {
   static String root = '/';
 
-  static String search = '/search';
+  static String search = '/search/search';
 
-  static String articleDetail = '/article-detail';
+  static String articleDetail = '/article/article-detail';
 
-  static String about = '/about';
-  static String version = '/version';
+  static String about = '/mine/about';
+  static String version = '/mine/version';
 
-  static String resume = '/resume';
-  static String evaluation = '/evaluation';
+  static String resume = '/resume/resume';
+  static String evaluation = '/resume/evaluation';
+  static String skill = '/resume/skill';
+  static String experience = '/resume/experience';
+  static String otherInfo = '/resume/other-info';
 
-  static String login = '/login';
+  static String login = '/login/login';
 
-  static String otherView = '/other-view';
+  static String otherView = '/webview/other-view';
 
   static void configureRoutes(FluroRouter router) {
     router.define(root, handler: indexHandler);
@@ -29,6 +32,9 @@ class Routes {
     router.define(version, handler: versionHandler);
     router.define(resume, handler: resumeHandler);
     router.define(evaluation, handler: evaluationHandler);
+    router.define(skill, handler: skillHandler);
+    router.define(experience, handler: experienceHandler);
+    router.define(otherInfo, handler: otherInfoHandler);
     router.define(login, handler: loginHandler);
     router.define(otherView, handler: otherViewHandler);
   }

@@ -25,9 +25,9 @@ class _ResumeState extends State<Resume> {
   List _linkList = [
     { 'text': '个人案例', 'route': Routes.otherView },
     { 'text': '职业评价', 'route': Routes.evaluation },
-    { 'text': '职业技能', 'route': Routes.otherView },
-    { 'text': '工作经历', 'route': Routes.otherView },
-    { 'text': '其他信息', 'route': Routes.otherView },
+    { 'text': '职业技能', 'route': Routes.skill },
+    { 'text': '工作经历', 'route': Routes.experience },
+    { 'text': '其他信息', 'route': Routes.otherInfo },
   ];
 
   @override

@@ -6,7 +6,10 @@ import 'package:jaryapp/pages/login/login.dart';
 import 'package:jaryapp/pages/mine/about.dart';
 import 'package:jaryapp/pages/mine/version.dart';
 import 'package:jaryapp/pages/resume/evaluation.dart';
+import 'package:jaryapp/pages/resume/experience.dart';
+import 'package:jaryapp/pages/resume/other_info.dart';
 import 'package:jaryapp/pages/resume/resume.dart';
+import 'package:jaryapp/pages/resume/skill.dart';
 import 'package:jaryapp/pages/webview/other_view.dart';
 import 'package:jaryapp/pages/search/search.dart';
 
@@ -44,6 +47,21 @@ Handler resumeHandler = Handler(handlerFunc: (BuildContext context, Map<String, 
 /// 职业评价
 Handler evaluationHandler = Handler(handlerFunc: (BuildContext context, Map<String, List<String>> params) {
   return Evaluation();
+});
+
+/// 职业技能
+Handler skillHandler = Handler(handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  return Skill();
+});
+
+/// 工作经历
+Handler experienceHandler = Handler(handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  return Experience();
+});
+
+/// 其他信息
+Handler otherInfoHandler = Handler(handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  return OtherInfo();
 });
 
 /// 登录
