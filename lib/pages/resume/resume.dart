@@ -23,7 +23,7 @@ class _ResumeState extends State<Resume> {
   List _detailList = [];
 
   List _linkList = [
-    { 'text': '个人案例', 'route': Routes.otherView },
+    { 'text': '个人案例', 'route': Routes.example },
     { 'text': '职业评价', 'route': Routes.evaluation },
     { 'text': '职业技能', 'route': Routes.skill },
     { 'text': '工作经历', 'route': Routes.experience },

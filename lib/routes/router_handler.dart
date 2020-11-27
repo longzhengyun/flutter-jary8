@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 import 'package:jaryapp/pages/article/article_detail.dart';
+import 'package:jaryapp/pages/example/example.dart';
+import 'package:jaryapp/pages/example/example_detail.dart';
 import 'package:jaryapp/pages/index.dart';
 import 'package:jaryapp/pages/login/login.dart';
 import 'package:jaryapp/pages/mine/about.dart';
@@ -62,6 +64,17 @@ Handler experienceHandler = Handler(handlerFunc: (BuildContext context, Map<Stri
 /// 其他信息
 Handler otherInfoHandler = Handler(handlerFunc: (BuildContext context, Map<String, List<String>> params) {
   return OtherInfo();
+});
+
+/// 个人案例
+Handler exampleHandler = Handler(handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  return Example();
+});
+
+/// 个人案例详情
+Handler exampleDetailHandler = Handler(handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  String _id = params['id']?.first;
+  return ExampleDetail(_id);
 });
 
 /// 登录

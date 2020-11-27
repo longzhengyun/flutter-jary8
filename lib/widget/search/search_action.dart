@@ -82,7 +82,7 @@ class SearchAction extends StatelessWidget {
                     bottomRight: Radius.circular(6 * Global.pr),
                     topRight: Radius.circular(6 * Global.pr),
                   ),
-                  color: Color(ThemeConfig.homeSearchBtnBgColor)
+                  color: Color(ThemeConfig.searchBtnBgColor)
                 ),
                 child: Icon(Icons.search, color: Color(ThemeConfig.defaultTextColor), size: 20 * Global.pr),
               ),

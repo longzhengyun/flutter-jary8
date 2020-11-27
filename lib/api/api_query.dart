@@ -34,7 +34,7 @@ class ApiQuery {
     if (url == ApiConfig.ARTICLE_RECOMMEND) {
       int _id = data['id'];
       String _category = data['category'];
-      if (_id is int && _category.isNotEmpty) {
+      if (_id != null && _category.isNotEmpty) {
         return await DBQuery().articleRecommend(_id, _category);
       }
     }
@@ -48,7 +48,7 @@ class ApiQuery {
 
     if (url == ApiConfig.ARTICLE_DETAIL) {
       int _id = data['id'];
-      if (_id is int) {
+      if (_id != null) {
         return await DBQuery().articleDetail(_id);
       }
     }
@@ -62,6 +62,28 @@ class ApiQuery {
       String _category = data['category'];
       int _limit = data['limit'] ?? 10;
       return await DBQuery().siteList(_index, _category, _limit);
+    }
+
+    if (url == ApiConfig.EXAMPLE_RECOMMEND) {
+      String _id = data['id'];
+      String _belong = data['belong'];
+      if (_id.isNotEmpty && _belong.isNotEmpty) {
+        return await DBQuery().exampleRecommend(_id, _belong);
+      }
+    }
+
+    if (url == ApiConfig.EXAMPLE_LIST) {
+      int _index = data['index'];
+      String _category = data['category'];
+      int _limit = data['limit'] ?? 10;
+      return await DBQuery().exampleList(_index, _category, _limit);
+    }
+
+    if (url == ApiConfig.EXAMPLE_DETAIL) {
+      String _id = data['id'];
+      if (_id.isNotEmpty) {
+        return await DBQuery().exampleDetail(_id);
+      }
     }
 
     if (url == ApiConfig.SEARCH) {

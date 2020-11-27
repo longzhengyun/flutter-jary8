@@ -163,6 +163,21 @@ class DBQuery {
     return _result;
   }
 
+  Future<List> articleList(int index, String category, int limit) async {
+    List _result = [];
+
+    String _name = 'article_data';
+    List<String> _columns = ['id', 'title', 'description', 'date', 'category', 'hot'];
+    String _where = category.isNotEmpty ? 'category="$category"' : null;
+
+    try {
+      _result = await ApiFetch.dbFetch(_name, columns: _columns, where: _where, limit: limit, offset: index - 1);
+    } catch (e) {
+    }
+
+    return _result;
+  }
+
   Future<Map> articleDetail(int id) async {
     Map _result;
 
@@ -176,21 +191,6 @@ class DBQuery {
       if (_data.isNotEmpty) {
         _result = _data.first;
       }
-    } catch (e) {
-    }
-
-    return _result;
-  }
-
-  Future<List> articleList(int index, String category, int limit) async {
-    List _result = [];
-
-    String _name = 'article_data';
-    List<String> _columns = ['id', 'title', 'description', 'date', 'category', 'hot'];
-    String _where = category.isNotEmpty ? 'category="$category"' : null;
-
-    try {
-      _result = await ApiFetch.dbFetch(_name, columns: _columns, where: _where, limit: limit, offset: index - 1);
     } catch (e) {
     }
 
@@ -222,6 +222,57 @@ class DBQuery {
 
     try {
       _result = await ApiFetch.dbFetch(_name, columns: _columns, where: _where, limit: limit, offset: index - 1);
+    } catch (e) {
+    }
+
+    return _result;
+  }
+
+  Future<List> exampleRecommend(String id, String belong) async {
+    List _result = [];
+
+    String _name = 'case_data';
+    List<String> _columns = ['id', 'title'];
+    String _where = 'belong="$belong" AND id!="$id"';
+    int _limit = 6;
+
+    try {
+      _result = await ApiFetch.dbFetch(_name, columns: _columns, where: _where, limit: _limit);
+    } catch (e) {
+      print(e);
+    }
+
+    return _result;
+  }
+
+  Future<List> exampleList(int index, String category, int limit) async {
+    List _result = [];
+
+    String _name = 'case_data';
+    List<String> _columns = ['id', 'title', 'description', 'date', 'category', 'hot'];
+    String _where = category.isNotEmpty ? 'category="$category"' : null;
+
+    try {
+      _result = await ApiFetch.dbFetch(_name, columns: _columns, where: _where, limit: limit, offset: index - 1);
+    } catch (e) {
+    }
+
+    return _result;
+  }
+
+  Future<Map> exampleDetail(String id) async {
+    Map _result;
+
+    String _name = 'case_data';
+    List<String> _columns = ['id', 'title', 'description', 'date', 'belong', 'category', 'pages'];
+    String _where = 'id="$id"';
+
+    try {
+      List _data = await ApiFetch.dbFetch(_name, columns: _columns, where: _where);
+
+      if (_data.isNotEmpty) {
+        _result = _data.first;
+      }
     } catch (e) {
     }
 

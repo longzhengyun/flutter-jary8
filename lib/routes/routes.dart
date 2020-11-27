@@ -20,6 +20,9 @@ class Routes {
   static String experience = '/resume/experience';
   static String otherInfo = '/resume/other-info';
 
+  static String example = '/example/example';
+  static String exampleDetail = '/example/example-detail';
+
   static String login = '/login/login';
 
   static String otherView = '/webview/other-view';
@@ -35,6 +38,8 @@ class Routes {
     router.define(skill, handler: skillHandler);
     router.define(experience, handler: experienceHandler);
     router.define(otherInfo, handler: otherInfoHandler);
+    router.define(example, handler: exampleHandler);
+    router.define(exampleDetail, handler: exampleDetailHandler);
     router.define(login, handler: loginHandler);
     router.define(otherView, handler: otherViewHandler);
   }

@@ -74,7 +74,7 @@ class _ArticleDetailState extends State<ArticleDetail> {
   }
 
   /// 获取推荐文章数据
-  void _getArticleRecommend(id, category) async {
+  void _getArticleRecommend(int id, String category) async {
     try {
       List _result = await ApiFetch.apiFetch(ApiConfig.ARTICLE_RECOMMEND, params: { 'id': id, 'category': category });
 

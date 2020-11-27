@@ -86,4 +86,11 @@ class ThemeConfig {
   /// Resume
   static String resumeIcon = 'assets/images/jary.jpg';
   static int resumeTextColor = color999;
+
+  /// Example
+  static int exampleTextColor = color999;
+  static int exampleHotTextColor = colorTheme;
+
+  /// Search
+  static int searchBtnBgColor = colorEEE;
 }

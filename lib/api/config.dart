@@ -33,6 +33,15 @@ class ApiConfig {
   /// 网站列表
   static const String SITE_LIST = '/site/list';
 
+  /// 相关案例
+  static const String EXAMPLE_RECOMMEND = '/example/recommend';
+
+  /// 个人案例
+  static const String EXAMPLE_LIST = '/example/list';
+
+  /// 个人案例详情
+  static const String EXAMPLE_DETAIL = '/example/detail';
+
   /// 搜索
   static const String SEARCH = '/search';
 }

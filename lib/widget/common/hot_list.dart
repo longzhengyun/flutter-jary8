@@ -32,7 +32,7 @@ class HotList extends StatelessWidget {
       ));
     }
 
-    return Container(
+    return list.isNotEmpty ? Container(
       color: Color(ThemeConfig.defaultBgColor),
       margin: EdgeInsets.only(top: 10 * Global.pr),
       child: Column(
@@ -68,6 +68,6 @@ class HotList extends StatelessWidget {
           ),
         ]
       ),
-    );
+    ) : Container();
   }
 }
