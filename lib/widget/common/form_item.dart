@@ -3,7 +3,7 @@ import 'package:jaryapp/utils/global.dart';
 import 'package:jaryapp/utils/theme_config.dart';
 
 class FormItem extends StatelessWidget {
-  FormItem(this.text, this.value, this.formKey, this.callback, { Key key, this.hint = '请输入正确信息', this.hideLine = false }) : super(key: key);
+  FormItem(this.text, this.value, this.formKey, this.callback, { Key key, this.hint = '请输入正确信息', this.hideLine = false, this.isPassword = false }) : super(key: key);
 
   final String text;
   final String value;
@@ -11,6 +11,7 @@ class FormItem extends StatelessWidget {
   final Function callback;
   final String hint;
   final bool hideLine;
+  final bool isPassword;
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +35,7 @@ class FormItem extends StatelessWidget {
             Expanded(
               child: TextField(
                 maxLength: 100,
-                minLines: 1,
-                maxLines: 2,
+                obscureText: isPassword,
                 keyboardType: TextInputType.text,
                 textAlign: TextAlign.right,
                 style: TextStyle(

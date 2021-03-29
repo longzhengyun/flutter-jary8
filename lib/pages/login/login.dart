@@ -59,7 +59,7 @@ class _LoginState extends State<Login> {
           SliverList(
             delegate: SliverChildListDelegate(<Widget>[
               FormItem('用户名', _userName, 'UserName', _onFormTap, hint: '请输入用户名', hideLine: true),
-              FormItem('密码', _password, 'Password', _onFormTap, hint: '请输入密码'),
+              FormItem('密码', _password, 'Password', _onFormTap, hint: '请输入密码', isPassword: true),
               GestureDetector(
                 behavior: HitTestBehavior.opaque, /// 解决点击空白处无效问题
                 onTap: () => _onLoginTap(),
