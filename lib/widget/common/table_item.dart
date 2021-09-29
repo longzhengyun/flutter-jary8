@@ -21,7 +21,6 @@ class TableItem extends StatelessWidget {
         ) : null,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.baseline,
           children: <Widget>[
             Container(
               width: 80 * Global.pr,
